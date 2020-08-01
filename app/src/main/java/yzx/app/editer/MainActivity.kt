@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity() {
                 this.colorSelected = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
                 this.text = "编辑"
                 this.textSizeDP = 11f
-                this.imageSelected = R.mipmap.ic_launcher
-                this.imageNormal = R.mipmap.ic_launcher
-                this.imageWidth = dp2px(25)
-                this.imageHeight = dp2px(25)
+                this.imageSelected = R.drawable.main_tab_edit_selected
+                this.imageNormal = R.drawable.main_tab_edit_normal
+                this.imageWidth = dp2px(26)
+                this.imageHeight = dp2px(26)
                 this.key = fragment_key_edit
                 this.fragment = fragment_edit
                 this.imageAndTextGap = dp2px(3)
@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
                 this.textSizeDP = 11f
                 this.imageSelected = R.mipmap.ic_launcher
                 this.imageNormal = R.mipmap.ic_launcher
-                this.imageWidth = dp2px(25)
-                this.imageHeight = dp2px(25)
+                this.imageWidth = dp2px(26)
+                this.imageHeight = dp2px(26)
                 this.key = fragment_key_cache
                 this.fragment = fragment_cache
                 this.imageAndTextGap = dp2px(3)

@@ -2,8 +2,8 @@
 
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorAccent</item>
-        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorStyle</item>
+        <item name="colorPrimaryDark">@color/colorStyle</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

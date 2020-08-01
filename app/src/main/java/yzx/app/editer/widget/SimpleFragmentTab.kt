@@ -56,7 +56,7 @@ class SimpleFragmentTab(context: Context, attrs: AttributeSet?) : LinearLayout(c
     fun switch(key: String): Boolean {
         val now = SystemClock.uptimeMillis()
         val timeInterval = now - lateSwitchTime
-        if (timeInterval < 250) return false
+        if (timeInterval < 150) return false
         lateSwitchTime = now
         kotlin.runCatching {
             tabList.forEach {
