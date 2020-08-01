@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomFragmentTab() {
         fragmentTab.set(supportFragmentManager, R.id.container, dp2px(52), ArrayList<SimpleFragmentTab.Tab>().apply {
             add(SimpleFragmentTab.Tab().apply {
-                this.colorNormal = Color.parseColor("#888888")
+                this.colorNormal = Color.parseColor("#bfbfbf")
                 this.colorSelected = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
                 this.text = "编辑"
                 this.textSizeDP = 11f
@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
                 this.imageAndTextGap = dp2px(3)
             })
             add(SimpleFragmentTab.Tab().apply {
-                this.colorNormal = Color.parseColor("#888888")
+                this.colorNormal = Color.parseColor("#bfbfbf")
                 this.colorSelected = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
                 this.text = "临存图"
                 this.textSizeDP = 11f
-                this.imageSelected = R.mipmap.ic_launcher
-                this.imageNormal = R.mipmap.ic_launcher
+                this.imageSelected = R.drawable.main_tab_cache_selected
+                this.imageNormal = R.drawable.main_tab_cache_normal
                 this.imageWidth = dp2px(26)
                 this.imageHeight = dp2px(26)
                 this.key = fragment_key_cache
