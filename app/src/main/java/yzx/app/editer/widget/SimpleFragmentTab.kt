@@ -57,9 +57,11 @@ class SimpleFragmentTab(context: Context, attrs: AttributeSet?) : LinearLayout(c
         val now = SystemClock.uptimeMillis()
         val timeInterval = now - lateSwitchTime
         if (timeInterval < 250) return false
+        lateSwitchTime = now
         kotlin.runCatching {
             tabList.forEach {
                 if (key == it.key) {
+
                     val showingF = getShowingFragment()
                     val targetF = it.fragment
                     if (showingF == targetF)
@@ -75,6 +77,17 @@ class SimpleFragmentTab(context: Context, attrs: AttributeSet?) : LinearLayout(c
                         } else
                             manager.beginTransaction().hide(showingF).add(containerID, targetF).commitAllowingStateLoss()
                     }
+
+                    repeat(this.childCount) { index ->
+                        val child = getChildAt(index)
+                        val tab = child.tag as Tab
+                        val iv = child.findViewWithTag<ImageView>("image")
+                        val tv = child.findViewWithTag<TextView>("text")
+                        val selected = tab.key == key
+                        iv.setImageResource(if (selected) tab.imageSelected else tab.imageNormal)
+                        tv.setTextColor(if (selected) tab.colorSelected else tab.colorNormal)
+                    }
+
                     return true
                 }
             }
@@ -112,6 +125,7 @@ class SimpleFragmentTab(context: Context, attrs: AttributeSet?) : LinearLayout(c
         textView.text = tab.text
         textView.setPadding(0, tab.imageAndTextGap, 0, 0)
         textView.tag = "text"
+        textView.layoutParams = LayoutParams(-2, -2).apply { gravity = Gravity.CENTER }
 
         this.addView(View(context).apply { layoutParams = LayoutParams(1, 0, 1f) })
         this.addView(imageView)
