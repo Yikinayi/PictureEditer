@@ -70,7 +70,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="25dp"
-                android:padding="6dp"
+                android:padding="7dp"
                 android:src="@drawable/ic_main_edit_text" />
 
             <TextView
@@ -107,7 +107,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="25dp"
-                android:padding="6dp"
+                android:padding="7dp"
                 android:src="@drawable/ic_main_edit_clip" />
 
             <TextView
@@ -144,6 +144,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="25dp"
+                android:padding="3dp"
                 android:src="@drawable/ic_main_edit_absorb" />
 
             <TextView
@@ -189,6 +190,117 @@
                 android:layout_marginLeft="85dp"
                 android:singleLine="true"
                 android:text="GIT图片单帧截图"
+                android:textColor="#666666"
+                android:textSize="16dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp"
+            app:cardBackgroundColor="#ffffff"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="4dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_gray"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="25dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_main_edit_pure" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="85dp"
+                android:singleLine="true"
+                android:text="创建单色图"
+                android:textColor="#666666"
+                android:textSize="16dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp"
+            app:cardBackgroundColor="#ffffff"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="4dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_gray"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="25dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_main_edit_rotation" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="85dp"
+                android:singleLine="true"
+                android:text="旋转图片"
+                android:textColor="#666666"
+                android:textSize="16dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp"
+            app:cardBackgroundColor="#ffffff"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="4dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_gray"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="25dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_main_edit_scale" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="85dp"
+                android:singleLine="true"
+                android:text="图片拉伸变形"
                 android:textColor="#666666"
                 android:textSize="16dp" />
 
