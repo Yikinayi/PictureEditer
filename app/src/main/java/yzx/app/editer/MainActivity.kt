@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTab.set(supportFragmentManager, R.id.container, dp2px(52), ArrayList<SimpleFragmentTab.Tab>().apply {
             add(SimpleFragmentTab.Tab().apply {
                 this.colorNormal = Color.parseColor("#bfbfbf")
-                this.colorSelected = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
+                this.colorSelected = Color.parseColor("#000000")
                 this.text = "编辑"
                 this.textSizeDP = 11f
                 this.imageSelected = R.drawable.main_tab_edit_selected
