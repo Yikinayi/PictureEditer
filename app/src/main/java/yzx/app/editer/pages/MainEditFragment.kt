@@ -40,14 +40,14 @@ class MainEditFragment : Fragment() {
                 outRect.bottom = dp2px(15)
             }
         })
+        val noMoreHolder = object : RecyclerView.ViewHolder(recyclerView.inflate(R.layout.item_main_edit_nomore)) {}
         recyclerView.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun getItemViewType(position: Int) = if (position < EditAbility.list.size) 1 else 2
             override fun getItemCount(): Int = EditAbility.list.size + 1
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 return if (viewType == 1)
                     object : RecyclerView.ViewHolder(parent.inflate(R.layout.item_main_edit)) {}
-                else
-                    object : RecyclerView.ViewHolder(parent.inflate(R.layout.item_main_edit_nomore)) {}
+                else noMoreHolder
             }
 
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
