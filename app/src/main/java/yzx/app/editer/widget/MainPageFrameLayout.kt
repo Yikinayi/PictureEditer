@@ -39,7 +39,7 @@ class MainPageFrameLayout(context: Context, attrs: AttributeSet?) : FrameLayout(
 
     private fun onRelease(child: View) {
         val minY = 0
-        val maxY = resources.displayMetrics.heightPixels - child.height
+        val maxY = resources.displayMetrics.heightPixels - child.height - child.height / 2
         val y = if (child.top < minY) minY else if (child.top > maxY) maxY else child.top
         dragger.smoothSlideViewTo(child, resources.displayMetrics.widthPixels - child.width, y)
         YStorage.save(y)
