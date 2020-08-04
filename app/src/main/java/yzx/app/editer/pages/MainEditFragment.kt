@@ -70,12 +70,19 @@ class MainEditFragment : Fragment() {
 
 
     private fun onItemClick(data: EditAbility) {
+        when (data) {
+            EditAbility.Pure -> PureColorPage.launch()
+
+        }
+    }
+
+    private fun getPicture(block: (String) -> String) {
         val activity = activity ?: return
         PermissionRequester.request(activity, Manifest.permission.READ_EXTERNAL_STORAGE) { result ->
             if (result) {
                 SystemPhotograph.request(activity) { path ->
                     if (!path.isBlank()) {
-
+                        block.invoke(path)
                     }
                 }
             }

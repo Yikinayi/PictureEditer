@@ -38,6 +38,10 @@
             android:screenOrientation="behind"
             android:theme="@style/InsensateActivity" />
 
+        <activity
+            android:name=".pages.PureColorPage"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
