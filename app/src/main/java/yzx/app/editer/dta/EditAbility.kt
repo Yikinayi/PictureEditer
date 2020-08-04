@@ -5,7 +5,7 @@ import yzx.app.editer.R
 
 enum class EditAbility {
 
-    Draw, Text, Clip, Absorb, Gif, Pure, Rotate, Scale
+    Draw, Text, Clip, Absorb, Gif, Pure, Rotate, Scale, TextToImage,
 
     ;
 
@@ -51,6 +51,10 @@ enum class EditAbility {
                 add(Scale.apply {
                     nameText = "拉伸"
                     image = R.drawable.ic_main_edit_scale
+                })
+                add(TextToImage.apply {
+                    nameText = "文字转图片"
+                    image = R.drawable.ic_main_edit_text_to_image
                 })
             }
         }
