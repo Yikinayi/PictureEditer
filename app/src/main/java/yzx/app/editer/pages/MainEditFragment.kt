@@ -1,10 +1,12 @@
 package yzx.app.editer.pages
 
+import android.Manifest
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,8 @@ import yzx.app.editer.R
 import yzx.app.editer.dta.EditAbility
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.inflate
+import yzx.app.editer.util.permission.PermissionRequester
+import yzx.app.editer.util.sysResource.SystemPhotograph
 import yzx.app.editer.widget.NoMoreAnimationView
 
 
@@ -66,7 +70,16 @@ class MainEditFragment : Fragment() {
 
 
     private fun onItemClick(data: EditAbility) {
+        val activity = activity ?: return
+        PermissionRequester.request(activity, Manifest.permission.READ_EXTERNAL_STORAGE) { result ->
+            if (result) {
+                SystemPhotograph.request(activity) { path ->
+                    if (!path.isBlank()) {
 
+                    }
+                }
+            }
+        }
     }
 
 

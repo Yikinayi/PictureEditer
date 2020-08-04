@@ -8,7 +8,7 @@
     </style>
 
 
-    <style name="PermissionBlankActivity" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="InsensateActivity" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@null</item>
