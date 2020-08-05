@@ -32,6 +32,13 @@ class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
             }
         }
 
+    fun given(color: Int) {
+        val hsv = FloatArray(3)
+        Color.colorToHSV(color, hsv)
+        indicatorProgress = hsv[0] / 360f
+        invalidate()
+    }
+
     private val colorArray = IntArray(7).apply {
         set(0, Color.rgb(255, 0, 0))
         set(1, Color.rgb(255, 255, 0))
