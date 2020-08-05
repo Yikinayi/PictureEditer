@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:alpha="0.8">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="14dp"
+            android:src="@drawable/arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="50dp"
+            android:text="单色图创建"
+            android:textColor="#222222"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图宽:  "
+            android:textColor="#222222"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="32dp"
+            android:background="#f9f9f9"
+            android:gravity="left|center_vertical"
+            android:inputType="number"
+            android:maxLength="4"
+            android:paddingLeft="4dp"
+            android:textColor="#666666"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图高:  "
+            android:textColor="#222222"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="32dp"
+            android:background="#f9f9f9"
+            android:gravity="left|center_vertical"
+            android:inputType="number"
+            android:maxLength="4"
+            android:paddingLeft="4dp"
+            android:textColor="#666666"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="形状:  "
+            android:textColor="#222222"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/shapeRect"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="矩形"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/shapeCircle"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="圆形"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/shapeTriangle"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="三角形"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
