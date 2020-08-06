@@ -36,7 +36,7 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
     private val bmpCanvas = Canvas(holderBitmap)
 
 
-    fun given(color: Int) {
+    fun given(color: Int, changeSV: Boolean) {
         if (givenColor == color)
             return
         givenColor = color
@@ -46,8 +46,10 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
         val hsv_s = hsv[1]
         val hsv_v = hsv[2]
         indicatorPaint.color = inverseColor(hsv_h)
-        selectedX = hsv_s
-        selectedY = hsv_v
+        if (changeSV) {
+            selectedX = hsv_s
+            selectedY = hsv_v
+        }
         drawBmp(hsv_h)
         invalidate()
         colorCallback?.invoke(false)

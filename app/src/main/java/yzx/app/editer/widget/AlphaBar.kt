@@ -37,10 +37,9 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) = Unit
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        if (this.color == 0 || width == 0 || height == 0)
-            return
+    @SuppressLint("DrawAllocation")
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
         shader = LinearGradient(
             0f, 0f, width.toFloat() - indicatorWidth, height.toFloat() - indicatorTopBottomGap * 2, Color.TRANSPARENT, color,
             Shader.TileMode.CLAMP
