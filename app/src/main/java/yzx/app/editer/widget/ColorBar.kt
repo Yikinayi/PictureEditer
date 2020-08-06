@@ -11,7 +11,7 @@ import yzx.app.editer.util.dp2px
 
 class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    var colorCallback: ((Int) -> Unit)? = null
+    var colorCallback: (() -> Unit)? = null
 
     val currentColor: Int
         get() {
@@ -104,7 +104,7 @@ class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         indicatorPaint.color = Color.BLACK
         canvas.drawRoundRect(indicatorRect, halfIndicatorWidth, halfIndicatorWidth, indicatorPaint)
 
-        colorCallback?.invoke(currentColor)
+        colorCallback?.invoke()
     }
 
     @SuppressLint("ClickableViewAccessibility")
