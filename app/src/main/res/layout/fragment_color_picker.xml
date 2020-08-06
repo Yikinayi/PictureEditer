@@ -49,10 +49,6 @@
             android:orientation="vertical"
             android:paddingLeft="20dp">
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,6 +64,7 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/redInput"
                     android:layout_width="50dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="5dp"
@@ -94,6 +91,7 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/greenInput"
                     android:layout_width="50dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="5dp"
@@ -120,6 +118,7 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/blueInput"
                     android:layout_width="50dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="5dp"
@@ -146,6 +145,7 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/alphaInput"
                     android:layout_width="50dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="5dp"
