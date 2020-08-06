@@ -24,7 +24,9 @@ import java.util.*
 class ColorPickerFragment : Fragment() {
 
     var onComplete: ((Int) -> Unit)? = null
-    var initColor: Int = Color.WHITE
+    var initColor: Int = Color.HSVToColor(FloatArray(3).apply {
+        set(0, 180f); set(1, 0.5f); set(2, 0.5f)
+    })
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -73,7 +75,8 @@ class ColorPickerFragment : Fragment() {
         greenInput.addTextChangedListener(textWatcher)
         blueInput.addTextChangedListener(textWatcher)
         confirm.setOnClickListener {
-
+            val c = replaceColorAlpha(panel.currentColor, alphaBar.currentAlpha)
+            onComplete?.invoke(c)
         }
     }
 

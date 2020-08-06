@@ -40,15 +40,15 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
         if (givenColor == color)
             return
         givenColor = color
-        val hsv = FloatArray(3)
+        val hsv = hsvArray
         Color.colorToHSV(givenColor, hsv)
         val hsv_h = hsv[0]
         val hsv_s = hsv[1]
         val hsv_v = hsv[2]
         indicatorPaint.color = inverseColor(hsv_h)
         if (changeSV) {
-            selectedX = hsv_s
-            selectedY = hsv_v
+            selectedX = hsv_s * holderBitmap.width
+            selectedY = (1 - hsv_v) * holderBitmap.height
         }
         drawBmp(hsv_h)
         invalidate()
@@ -65,8 +65,8 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
             paint.style = Paint.Style.FILL
             val width = holderBitmap.width
             val height = holderBitmap.height
-            val xCount = 70f
-            val yCount = 70f
+            val xCount = 50f
+            val yCount = 50f
             val blockWidth = width / xCount
             val blockHeight = height / yCount
             repeat(xCount.toInt()) { x ->
@@ -141,7 +141,10 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
     }
 
     private fun inverseColor(h: Float): Int {
-        val maxColor = Color.HSVToColor(floatArrayOf(h, 1f, 1f))
+        hsvArray[0] = h
+        hsvArray[1] = 1f
+        hsvArray[2] = 1f
+        val maxColor = Color.HSVToColor(hsvArray)
         return yzx.app.editer.util.tools.inverseColor(maxColor)
     }
 
