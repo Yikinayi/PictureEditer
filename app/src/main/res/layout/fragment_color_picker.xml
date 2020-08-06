@@ -16,6 +16,8 @@
             android:id="@+id/back"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:padding="14dp"
             android:src="@drawable/arrow_back" />
 
@@ -66,7 +68,7 @@
                 <EditText
                     android:id="@+id/redInput"
                     android:layout_width="50dp"
-                    android:layout_height="25dp"
+                    android:layout_height="22dp"
                     android:layout_marginLeft="5dp"
                     android:background="#fafafa"
                     android:gravity="left|center_vertical"
@@ -93,7 +95,7 @@
                 <EditText
                     android:id="@+id/greenInput"
                     android:layout_width="50dp"
-                    android:layout_height="25dp"
+                    android:layout_height="22dp"
                     android:layout_marginLeft="5dp"
                     android:background="#fafafa"
                     android:gravity="left|center_vertical"
@@ -120,7 +122,7 @@
                 <EditText
                     android:id="@+id/blueInput"
                     android:layout_width="50dp"
-                    android:layout_height="25dp"
+                    android:layout_height="22dp"
                     android:layout_marginLeft="5dp"
                     android:background="#fafafa"
                     android:gravity="left|center_vertical"
@@ -161,6 +163,11 @@
                 android:layout_width="1dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
+
+            <yzx.app.editer.widget.ColorCircle
+                android:id="@+id/colorCircle"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -237,7 +244,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
         android:src="@drawable/confirm_right"
-        app:backgroundTint="#ffff00"
+        app:backgroundTint="#ffffff"
         app:elevation="8dp"
         app:fabCustomSize="72dp" />
 
