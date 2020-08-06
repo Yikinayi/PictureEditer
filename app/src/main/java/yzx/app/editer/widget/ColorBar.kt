@@ -11,7 +11,7 @@ import yzx.app.editer.util.dp2px
 
 class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    var colorCallback: (() -> Unit)? = null
+    var colorCallback: ((byUser: Boolean) -> Unit)? = null
 
     val currentColor: Int
         get() {
@@ -37,6 +37,7 @@ class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         Color.colorToHSV(color, hsv)
         indicatorProgress = hsv[0] / 360f
         invalidate()
+        colorCallback?.invoke(false)
     }
 
     private val colorArray = IntArray(7).apply {
@@ -107,19 +108,20 @@ class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         indicatorRect.right -= halfStrokeWidth
         indicatorPaint.color = Color.BLACK
         canvas.drawRoundRect(indicatorRect, halfIndicatorWidth, halfIndicatorWidth, indicatorPaint)
-
-        colorCallback?.invoke()
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (width <= 0) return true
+        if (width <= 0)
+            return true
         when (event.action) {
             MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN -> {
                 val x = event.x
                 val p = (x - indicatorWidth / 2) / (width - indicatorWidth)
                 indicatorProgress = if (p > 1f) 1f else if (p < 0f) 0f else p
                 invalidate()
+                colorCallback?.invoke(true)
             }
         }
         return true

@@ -12,7 +12,7 @@ import yzx.app.editer.util.dp2px
 class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
 
-    var alphaCallback: (() -> Unit)? = null
+    var alphaCallback: ((byUser: Boolean) -> Unit)? = null
     val currentAlpha: Float
         get() = indicatorProgress
 
@@ -22,6 +22,7 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         indicatorProgress = alpha
         this.color = color
         requestLayout()
+        alphaCallback?.invoke(false)
     }
 
     private var color = 0
@@ -46,8 +47,8 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         )
     }
 
-    private val bgBlockColor1 = Color.rgb(133, 133, 133)
-    private val bgBlockColor2 = Color.rgb(194, 194, 194)
+    private val bgBlockColor1 = Color.rgb(166, 166, 166)
+    private val bgBlockColor2 = Color.rgb(211, 211, 211)
     private val bgBlockRect = RectF()
     private val bgBlockPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -109,8 +110,6 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         indicatorRect.right -= halfStrokeWidth
         indicatorPaint.color = Color.BLACK
         canvas.drawRoundRect(indicatorRect, halfIndicatorWidth, halfIndicatorWidth, indicatorPaint)
-
-        alphaCallback?.invoke()
     }
 
 
@@ -123,6 +122,7 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
                 val p = (x - indicatorWidth / 2) / (width - indicatorWidth)
                 indicatorProgress = if (p > 1f) 1f else if (p < 0f) 0f else p
                 invalidate()
+                alphaCallback?.invoke(true)
             }
         }
         return true

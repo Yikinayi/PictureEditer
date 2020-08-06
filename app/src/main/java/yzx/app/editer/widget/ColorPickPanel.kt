@@ -13,7 +13,7 @@ import yzx.app.editer.util.dp2px
 class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
 
-    var colorCallback: (() -> Unit)? = null
+    var colorCallback: ((byUser: Boolean) -> Unit)? = null
     val currentColor: Int
         get() {
             if (givenColor == 0) return 0
@@ -43,9 +43,14 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
         val hsv = FloatArray(3)
         Color.colorToHSV(givenColor, hsv)
         val hsv_h = hsv[0]
+        val hsv_s = hsv[1]
+        val hsv_v = hsv[2]
         indicatorPaint.color = inverseColor(hsv_h)
+        selectedX = hsv_s
+        selectedY = hsv_v
         drawBmp(hsv_h)
         invalidate()
+        colorCallback?.invoke(false)
     }
 
     private val rect = RectF()
@@ -109,7 +114,6 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
             c.drawLine(selectedX, selectedY - indicatorLineHalfLen, selectedX, selectedY + indicatorLineHalfLen, indicatorPaint)
             c.drawLine(selectedX - indicatorLineHalfLen, selectedY, selectedX + indicatorLineHalfLen, selectedY, indicatorPaint)
         }
-        colorCallback?.invoke()
     }
 
 
@@ -128,6 +132,7 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
                 if (selectedY < 0f) selectedY = 0f
                 if (selectedY > holderBitmap.height) selectedY = holderBitmap.height.toFloat()
                 invalidate()
+                colorCallback?.invoke(true)
             }
         }
         return true
