@@ -12,7 +12,22 @@ import yzx.app.editer.util.dp2px
 
 class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private var currentColor: Int = 0
+
+    var colorCallback: (() -> Unit)? = null
+    val currentColor: Int
+        get() {
+            if (givenColor == 0) return 0
+            Color.colorToHSV(givenColor, hsvArray)
+            val h = hsvArray[0]
+            val s = selectedX / holderBitmap.width
+            val v = 1 - selectedY / holderBitmap.height
+            return Color.HSVToColor(hsvArray.apply {
+                set(0, h); set(1, s); set(2, v)
+            })
+        }
+
+
+    private var givenColor: Int = 0
 
     // 写死bitmap的宽高, 与外部的控件声明宽高一直
     private val holderBitmap = Bitmap.createBitmap(
@@ -22,11 +37,11 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
 
 
     fun given(color: Int) {
-        if (currentColor == color)
+        if (givenColor == color)
             return
-        currentColor = color
+        givenColor = color
         val hsv = FloatArray(3)
-        Color.colorToHSV(currentColor, hsv)
+        Color.colorToHSV(givenColor, hsv)
         val hsv_h = hsv[0]
         indicatorPaint.color = inverseColor(hsv_h)
         drawBmp(hsv_h)
@@ -83,7 +98,7 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
     private val indicatorStrokeWidth = dp2px(1).toFloat()
 
     override fun onDraw(c: Canvas) {
-        if (currentColor == 0) {
+        if (givenColor == 0) {
             c.drawColor(Color.TRANSPARENT)
         } else {
             c.drawBitmap(holderBitmap, 0f, 0f, null)
@@ -94,6 +109,7 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
             c.drawLine(selectedX, selectedY - indicatorLineHalfLen, selectedX, selectedY + indicatorLineHalfLen, indicatorPaint)
             c.drawLine(selectedX - indicatorLineHalfLen, selectedY, selectedX + indicatorLineHalfLen, selectedY, indicatorPaint)
         }
+        colorCallback?.invoke()
     }
 
 
