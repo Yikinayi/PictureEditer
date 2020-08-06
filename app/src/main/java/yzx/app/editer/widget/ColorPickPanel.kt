@@ -135,7 +135,7 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
 
     private fun inverseColor(h: Float): Int {
         val maxColor = Color.HSVToColor(floatArrayOf(h, 1f, 1f))
-        return Color.rgb(255 - Color.red(maxColor), 255 - Color.green(maxColor), 255 - Color.blue(maxColor))
+        return yzx.app.editer.util.tools.inverseColor(maxColor)
     }
 
 }
