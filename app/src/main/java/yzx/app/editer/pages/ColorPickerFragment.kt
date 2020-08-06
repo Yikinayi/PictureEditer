@@ -64,22 +64,54 @@ class ColorPickerFragment : Fragment() {
                 colorCircle.color = c
             }
         }
-        val textWatcher = object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) = Unit
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-        }
-        redInput.addTextChangedListener(textWatcher)
-        greenInput.addTextChangedListener(textWatcher)
-        blueInput.addTextChangedListener(textWatcher)
         confirm.setOnClickListener {
             val c = replaceColorAlpha(panel.currentColor, alphaBar.currentAlpha)
             onComplete?.invoke(c)
         }
     }
 
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) = onInputChanged(this)
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+    }
+
+    private fun onInputChanged(w: TextWatcher) {
+        redInput.removeTextChangedListener(w)
+        greenInput.removeTextChangedListener(w)
+        blueInput.removeTextChangedListener(w)
+        alphaInput.removeTextChangedListener(w)
+        var redStr = redInput.text.toString()
+        var greenStr = greenInput.text.toString()
+        var blueStr = blueInput.text.toString()
+        var alphaStr = alphaInput.text.toString()
+        if (redStr.isBlank()) redStr = "0"
+        if (greenStr.isBlank()) greenStr = "0"
+        if (blueStr.isBlank()) blueStr = "0"
+        if (alphaStr.isBlank()) alphaStr = "0"
+        val red = redStr.toInt().coerceAtMost(255)
+        val green = greenStr.toInt().coerceAtMost(255)
+        val blue = blueStr.toInt().coerceAtMost(255)
+        val alpha = alphaStr.toInt().coerceAtMost(255)
+        redInput.setText(red.toString())
+        redInput.setSelection(redInput.text.length)
+        greenInput.setText(green.toString())
+        greenInput.setSelection(greenInput.text.length)
+        blueInput.setText(blue.toString())
+        blueInput.setSelection(blueInput.text.length)
+        alphaInput.setText(alpha.toString())
+        alphaInput.setSelection(alphaInput.text.length)
+        val color = Color.argb(alpha, red, green, blue)
+        panel.given(color, true)
+        colorCircle.color = color
+        colorBar.given(color)
+        alphaBar.set(Color.alpha(color) / 255f, replaceColorAlpha(color, 1f))
+        setHexText(color)
+        redInput.addTextChangedListener(w)
+        greenInput.addTextChangedListener(w)
+        blueInput.addTextChangedListener(w)
+        alphaInput.addTextChangedListener(w)
+    }
 
     private fun acceptColor(color: Int) {
         panel.given(color, true)
@@ -91,10 +123,22 @@ class ColorPickerFragment : Fragment() {
     }
 
     private fun setRGBAInput(color: Int) {
+        redInput.removeTextChangedListener(textWatcher)
+        greenInput.removeTextChangedListener(textWatcher)
+        blueInput.removeTextChangedListener(textWatcher)
+        alphaInput.removeTextChangedListener(textWatcher)
         redInput.setText(Color.red(color).toString())
         greenInput.setText(Color.green(color).toString())
         blueInput.setText(Color.blue(color).toString())
         alphaInput.setText(Color.alpha(color).toString())
+        redInput.setSelection(redInput.text.length)
+        greenInput.setSelection(greenInput.text.length)
+        blueInput.setSelection(blueInput.text.length)
+        alphaInput.setSelection(alphaInput.text.length)
+        redInput.addTextChangedListener(textWatcher)
+        greenInput.addTextChangedListener(textWatcher)
+        blueInput.addTextChangedListener(textWatcher)
+        alphaInput.addTextChangedListener(textWatcher)
     }
 
     @SuppressLint("SetTextI18n")
