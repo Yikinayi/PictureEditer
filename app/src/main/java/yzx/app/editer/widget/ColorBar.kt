@@ -67,13 +67,17 @@ class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val indicatorRect = RectF()
     private var indicatorProgress = 0f
 
+
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) = Unit
 
-    @SuppressLint("DrawAllocation")
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        shader = LinearGradient(0f, 0f, width.toFloat(), height.toFloat(), colorArray, positionArray, Shader.TileMode.CLAMP)
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        shader = LinearGradient(
+            0f, 0f, width.toFloat() - indicatorWidth, height.toFloat() - indicatorTopBottomGap * 2,
+            colorArray, positionArray, Shader.TileMode.CLAMP
+        )
     }
+
 
     override fun onDraw(canvas: Canvas) {
         paint.shader = shader
