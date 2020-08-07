@@ -1,23 +1,17 @@
 package yzx.app.editer.pages
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_color_picker.*
 import yzx.app.editer.R
-import yzx.app.editer.util.tools.Inte
-import yzx.app.editer.util.tools.inverseColor
 import yzx.app.editer.util.tools.replaceColorAlpha
-import java.math.BigInteger
 import java.util.*
 
 
@@ -39,20 +33,22 @@ class ColorPickerFragment : Fragment() {
         acceptColor(initColor)
         panel.colorCallback = { byUser ->
             if (byUser) {
-                val c = replaceColorAlpha(panel.currentColor, alphaBar.currentAlpha)
+                val panelColor = panel.currentColor
+                val c = replaceColorAlpha(panelColor, alphaBar.currentAlpha)
                 setRGBAInput(c)
                 colorCircle.color = c
                 setHexText(c)
-                alphaBar.set(alphaBar.currentAlpha, panel.currentColor)
+                alphaBar.set(alphaBar.currentAlpha, panelColor)
             }
         }
         colorBar.colorCallback = { byUser ->
             if (byUser) {
                 panel.given(colorBar.currentColor, false)
-                val c = replaceColorAlpha(panel.currentColor, alphaBar.currentAlpha)
+                val panelColor = panel.currentColor
+                val c = replaceColorAlpha(panelColor, alphaBar.currentAlpha)
                 setRGBAInput(c)
                 colorCircle.color = c
-                alphaBar.set(alphaBar.currentAlpha, panel.currentColor)
+                alphaBar.set(alphaBar.currentAlpha, panelColor)
                 setHexText(c)
             }
         }
@@ -105,7 +101,7 @@ class ColorPickerFragment : Fragment() {
         panel.given(color, true)
         colorCircle.color = color
         colorBar.given(color)
-        alphaBar.set(Color.alpha(color) / 255f, replaceColorAlpha(color, 1f))
+        alphaBar.set(alpha / 255f, Color.rgb(red, green, blue))
         setHexText(color)
         redInput.addTextChangedListener(w)
         greenInput.addTextChangedListener(w)
@@ -147,13 +143,13 @@ class ColorPickerFragment : Fragment() {
         val r = Color.red(color)
         val g = Color.green(color)
         val b = Color.blue(color)
-        var aStr = Inte.toHex(a).toUpperCase(Locale.ROOT)
+        var aStr = Integer.toHexString(a).toUpperCase(Locale.ROOT)
         if (aStr.length < 2) aStr = "0${aStr}"
-        var rStr = Inte.toHex(r).toUpperCase(Locale.ROOT)
+        var rStr = Integer.toHexString(r).toUpperCase(Locale.ROOT)
         if (rStr.length < 2) rStr = "0${rStr}"
-        var gStr = Inte.toHex(g).toUpperCase(Locale.ROOT)
+        var gStr = Integer.toHexString(g).toUpperCase(Locale.ROOT)
         if (gStr.length < 2) gStr = "0${gStr}"
-        var bStr = Inte.toHex(b).toUpperCase(Locale.ROOT)
+        var bStr = Integer.toHexString(b).toUpperCase(Locale.ROOT)
         if (bStr.length < 2) bStr = "0${bStr}"
         hexText.text = "${aStr}${rStr}${gStr}${bStr}"
     }
