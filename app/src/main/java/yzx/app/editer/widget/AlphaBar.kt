@@ -47,7 +47,7 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private var color = 0
     private var shader: LinearGradient? = null
-    private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint: Paint = Paint()
     private val indicatorPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val indicatorTopBottomGap = dp2px(3).toFloat()
     private val indicatorWidth = dp2px(6).toFloat()
@@ -61,7 +61,7 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val bgBlockColor1 = Color.rgb(166, 166, 166)
     private val bgBlockColor2 = Color.rgb(211, 211, 211)
     private val bgBlockRect = RectF()
-    private val bgBlockPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val bgBlockPaint = Paint().apply {
         style = Paint.Style.FILL
     }
 
@@ -74,12 +74,12 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         canvas.save()
         canvas.clipRect(bgBlockRect.apply {
             left = indicatorWidth / 2f
-            right = width - indicatorWidth / 2f
+            right = widgetWidth - indicatorWidth / 2f
             top = indicatorTopBottomGap
-            bottom = height - indicatorTopBottomGap
+            bottom = widgetHeight - indicatorTopBottomGap
         })
-        val bgBlockLen = (height - indicatorTopBottomGap * 2) / 2f
-        val xCount = width / bgBlockLen + 1
+        val bgBlockLen = (widgetHeight - indicatorTopBottomGap * 2) / 2f
+        val xCount = widgetWidth / bgBlockLen + 1
         repeat(xCount.toInt()) { x ->
             repeat(2) { y ->
                 bgBlockPaint.color = when (y) {
@@ -99,7 +99,7 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         paint.shader = shader
         paint.style = Paint.Style.FILL
         canvas.drawRect(
-            indicatorWidth / 2, indicatorTopBottomGap, width.toFloat() - indicatorWidth / 2, height.toFloat() - indicatorTopBottomGap, paint
+            indicatorWidth / 2, indicatorTopBottomGap, width.toFloat() - indicatorWidth / 2, widgetHeight.toFloat() - indicatorTopBottomGap, paint
         )
 
         val halfIndicatorWidth = indicatorWidth / 2f
@@ -109,7 +109,7 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         indicatorRect.left = indicatorCenterX - halfIndicatorWidth
         indicatorRect.right = indicatorRect.left + indicatorWidth
         indicatorRect.top = 0f
-        indicatorRect.bottom = height.toFloat()
+        indicatorRect.bottom = widgetHeight
 
         indicatorPaint.style = Paint.Style.FILL
         indicatorPaint.color = Color.WHITE
