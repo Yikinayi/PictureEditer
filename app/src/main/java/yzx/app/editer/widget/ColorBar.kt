@@ -14,31 +14,19 @@ class ColorBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var colorCallback: ((byUser: Boolean) -> Unit)? = null
 
     val currentColor: Int
-        get() {
-            return when (indicatorProgress) {
-                in positionArray[0]..positionArray[1] ->
-                    Color.rgb(255, (255f * (indicatorProgress / positionArray[1])).toInt(), 0)
-                in positionArray[1]..positionArray[2] ->
-                    Color.rgb((255f * (positionArray[2] - indicatorProgress) / (positionArray[2] - positionArray[1])).toInt(), 255, 0)
-                in positionArray[2]..positionArray[3] ->
-                    Color.rgb(0, 255, ((indicatorProgress - positionArray[2]) / (positionArray[3] - positionArray[2]) * 255f).toInt())
-                in positionArray[3]..positionArray[4] ->
-                    Color.rgb(0, ((1 - (indicatorProgress - positionArray[3]) / (positionArray[4] - positionArray[3])) * 255f).toInt(), 255)
-                in positionArray[4]..positionArray[5] ->
-                    Color.rgb(((indicatorProgress - positionArray[4]) / (positionArray[5] - positionArray[4]) * 255f).toInt(), 0, 255)
-                in positionArray[5]..positionArray[6] ->
-                    Color.rgb(255, 0, ((1 - (indicatorProgress - positionArray[5]) / (positionArray[6] - positionArray[5])) * 255f).toInt())
-                else -> 0
-            }
-        }
+        get() = Color.HSVToColor(hsvArray.apply {
+            set(0, indicatorProgress * 360f);set(1, 1f);set(2, 1f)
+        })
+
 
     fun given(color: Int) {
-        val hsv = FloatArray(3)
-        Color.colorToHSV(color, hsv)
-        indicatorProgress = hsv[0] / 360f
+        Color.colorToHSV(color, hsvArray)
+        indicatorProgress = hsvArray[0] / 360f
         invalidate()
         colorCallback?.invoke(false)
     }
+
+    private val hsvArray = FloatArray(3)
 
     private val colorArray = IntArray(7).apply {
         set(0, Color.rgb(255, 0, 0))
