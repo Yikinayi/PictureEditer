@@ -17,8 +17,7 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
     val currentColor: Int
         get() {
             if (givenColor == 0) return 0
-            Color.colorToHSV(givenColor, hsvArray)
-            val h = hsvArray[0]
+            val h = givenColorHue
             val s = selectedX / holderBitmap.width
             val v = 1 - selectedY / holderBitmap.height
             return Color.HSVToColor(hsvArray.apply {
@@ -27,7 +26,9 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
         }
 
 
-    private var givenColor: Int = 0
+    private var givenColor = 0
+    private var givenColorHue = 0f
+
 
     // 写死bitmap的宽高, 与外部的控件声明宽高一直
     private val holderBitmap = Bitmap.createBitmap(
@@ -42,15 +43,14 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
         givenColor = color
         val hsv = hsvArray
         Color.colorToHSV(givenColor, hsv)
-        val hsv_h = hsv[0]
-        val hsv_s = hsv[1]
-        val hsv_v = hsv[2]
-        indicatorPaint.color = inverseColor(hsv_h)
+        givenColorHue = hsv[0]
         if (changeSV) {
+            val hsv_s = hsv[1]
+            val hsv_v = hsv[2]
             selectedX = hsv_s * holderBitmap.width
             selectedY = (1 - hsv_v) * holderBitmap.height
         }
-        drawBmp(hsv_h)
+        drawBmp(givenColorHue)
         invalidate()
         colorCallback?.invoke(false)
     }
@@ -65,8 +65,8 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
             paint.style = Paint.Style.FILL
             val width = holderBitmap.width
             val height = holderBitmap.height
-            val xCount = 50f
-            val yCount = 50f
+            val xCount = 20f
+            val yCount = 20f
             val blockWidth = width / xCount
             val blockHeight = height / yCount
             repeat(xCount.toInt()) { x ->
@@ -80,8 +80,7 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
                     hsvArray[0] = hsv_h
                     hsvArray[1] = s
                     hsvArray[2] = v
-                    val color = Color.HSVToColor(hsvArray)
-                    paint.color = color
+                    paint.color = Color.HSVToColor(hsvArray)
                     canvas.drawRect(rect, paint)
                 }
             }
@@ -95,10 +94,11 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
     private val strokePaint = Paint().apply {
         style = Paint.Style.STROKE
         strokeWidth = 2f
-        color = Color.parseColor("#aaaaaa")
+        color = Color.parseColor("#AAAAAA")
     }
     private val indicatorPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         this.strokeCap = Paint.Cap.ROUND
+        this.color = Color.WHITE
     }
     private val indicatorRadius = dp2px(2).toFloat()
     private val indicatorLineHalfLen = dp2px(6).toFloat()
@@ -138,14 +138,6 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
             }
         }
         return true
-    }
-
-    private fun inverseColor(h: Float): Int {
-        hsvArray[0] = h
-        hsvArray[1] = 1f
-        hsvArray[2] = 1f
-        val maxColor = Color.HSVToColor(hsvArray)
-        return yzx.app.editer.util.tools.inverseColor(maxColor)
     }
 
 }
