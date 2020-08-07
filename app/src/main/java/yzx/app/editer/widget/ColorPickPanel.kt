@@ -6,7 +6,6 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import yzx.app.editer.util.U
 import yzx.app.editer.util.dp2px
 
 
@@ -84,18 +83,9 @@ class ColorPickPanel(context: Context?, attrs: AttributeSet?) : View(context, at
                     canvas.drawRect(rect, paint)
                 }
             }
-            canvas.drawLine(0f, 0f, holderBitmap.width.toFloat(), 0f, strokePaint)
-            canvas.drawLine(holderBitmap.width.toFloat(), 0f, holderBitmap.width.toFloat(), holderBitmap.height.toFloat(), strokePaint)
-            canvas.drawLine(0f, 0f, 0f, holderBitmap.height.toFloat(), strokePaint)
-            canvas.drawLine(0f, holderBitmap.height.toFloat(), holderBitmap.width.toFloat(), holderBitmap.height.toFloat(), strokePaint)
         }
     }
 
-    private val strokePaint = Paint().apply {
-        style = Paint.Style.STROKE
-        strokeWidth = 2f
-        color = Color.parseColor("#AAAAAA")
-    }
     private val indicatorPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         this.strokeCap = Paint.Cap.ROUND
         this.color = Color.WHITE
