@@ -16,13 +16,33 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     val currentAlpha: Float
         get() = indicatorProgress
 
+
+    private val widgetWidth: Float = (yzx.app.editer.util.U.app.resources.displayMetrics.widthPixels - dp2px(60)).toFloat()
+    private val widgetHeight = dp2px(26).toFloat()
+    private var shaderColor = 0
+
     fun set(alpha: Float, color: Int) {
         if (this.currentAlpha == alpha && this.color == color)
             return
         indicatorProgress = alpha
         this.color = color
-        requestLayout()
+        invalidate()
         alphaCallback?.invoke(false)
+    }
+
+    private fun makeShader() {
+        if (color == 0) {
+            shaderColor = 0
+            shader = null
+            return
+        }
+        if (shaderColor == color)
+            return
+        shader = LinearGradient(
+            0f, 0f, widgetWidth - indicatorWidth, widgetHeight - indicatorTopBottomGap * 2, Color.TRANSPARENT, color,
+            Shader.TileMode.CLAMP
+        )
+        shaderColor = color
     }
 
     private var color = 0
@@ -37,14 +57,6 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) = Unit
 
-    @SuppressLint("DrawAllocation")
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        shader = LinearGradient(
-            0f, 0f, width.toFloat() - indicatorWidth, height.toFloat() - indicatorTopBottomGap * 2, Color.TRANSPARENT, color,
-            Shader.TileMode.CLAMP
-        )
-    }
 
     private val bgBlockColor1 = Color.rgb(166, 166, 166)
     private val bgBlockColor2 = Color.rgb(211, 211, 211)
@@ -54,6 +66,8 @@ class AlphaBar(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     }
 
     override fun onDraw(canvas: Canvas) {
+        makeShader()
+
         if (shader == null)
             return
 
