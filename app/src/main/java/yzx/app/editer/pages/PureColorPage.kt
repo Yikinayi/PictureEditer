@@ -23,6 +23,7 @@ class PureColorPage : BaseEditPage() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.page_pure_color)
         makeShapeCheckbox()
+        colorCircle.color = Color.parseColor("#99FF0000")
     }
 
 

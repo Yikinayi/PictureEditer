@@ -21,4 +21,11 @@
         <item name="background">@drawable/bg_main_activity</item>
     </style>
 
+
+    <style name="DialogDimDisable" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="DialogDimEnable" parent="Theme.AppCompat.Dialog"></style>
+
 </resources>
