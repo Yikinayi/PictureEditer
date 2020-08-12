@@ -26,7 +26,7 @@ object ColorPicker {
 
 class ColorPickerActivity : AppCompatActivity() {
 
-    private val initColor: Int by lazy { intent.getIntExtra("sign", 0) }
+    private val initColor: Int by lazy { intent.getIntExtra("color", 0) }
     private val sign by lazy { intent.getStringExtra("sign") ?: "" }
 
 

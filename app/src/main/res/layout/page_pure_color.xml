@@ -48,10 +48,12 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/widthInput"
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:background="#f9f9f9"
             android:gravity="left|center_vertical"
+            android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="4"
             android:paddingLeft="4dp"
@@ -84,6 +86,7 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/heightInput"
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:background="#f9f9f9"
@@ -186,33 +189,44 @@
     </FrameLayout>
 
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="105dp"
-        android:layout_marginTop="80dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
 
         <View
-            android:layout_width="0dp"
+            android:id="@+id/line"
+            android:layout_width="30dp"
             android:layout_height="1dp"
-            android:layout_weight="1" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="115dp"
+            android:layout_marginRight="20dp"
+            android:background="#eeeeee" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/preview"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="95dp"
+            android:src="@drawable/eye_preview"
+            app:backgroundTint="#ffffff"
+            app:elevation="4dp"
+            app:fabCustomSize="40dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/confirm"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp"
             android:src="@drawable/confirm_right"
             app:backgroundTint="#ffffff"
             app:elevation="8dp"
-            app:fabCustomSize="72dp" />
+            app:fabCustomSize="70dp" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
