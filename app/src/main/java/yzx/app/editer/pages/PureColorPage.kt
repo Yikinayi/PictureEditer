@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
+import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.page_pure_color.*
 import yzx.app.editer.R
 import yzx.app.editer.pages.ability.ColorPicker
@@ -26,9 +27,12 @@ class PureColorPage : BaseEditPage() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.page_pure_color)
+        BarUtils.setStatusBarColor(this, Color.parseColor("#f4f4f4"))
         makeShapeCheckbox()
         widthHeightInputLogic()
         colorLogic()
+        confirmLogic()
+        previewLogic()
     }
 
     private fun colorLogic() {
@@ -36,6 +40,32 @@ class PureColorPage : BaseEditPage() {
         colorCircle.setOnClickListener {
             ColorPicker.start(colorCircle.color) {
                 colorCircle.color = it
+            }
+        }
+    }
+
+    private fun confirmLogic() {
+        confirm.setOnClickListener {
+            val widthStr = widthInput.text.toString().trim()
+            val heightStr = heightInput.text.toString().trim()
+            if (widthStr.isNotBlank() && heightStr.isNotBlank()) {
+                val width = widthStr.toInt()
+                val height = heightStr.toInt()
+
+            } else {
+
+            }
+        }
+    }
+
+    private fun previewLogic() {
+        preview.setOnClickListener {
+            val widthStr = widthInput.text.toString().trim()
+            val heightStr = heightInput.text.toString().trim()
+            if (widthStr.isNotBlank() && heightStr.isNotBlank()) {
+                val width = widthStr.toInt()
+                val height = heightStr.toInt()
+
             }
         }
     }
@@ -64,11 +94,17 @@ class PureColorPage : BaseEditPage() {
         arrayOf(shapeRect, shapeCircle, shapeTriangle)
     }
 
+    private var shape: Shape = Shape.Rect
+
+    enum class Shape {
+        Circle, Rect, Triangle
+    }
+
     private fun makeShapeCheckbox() {
         shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeRect) }
-        shapeRect.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeRect) } }
-        shapeCircle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeCircle) } }
-        shapeTriangle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeTriangle) } }
+        shapeRect.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeRect) }; shape = Shape.Rect }
+        shapeCircle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeCircle) };shape = Shape.Circle }
+        shapeTriangle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeTriangle) }; shape = Shape.Triangle }
     }
 
     private fun setShapeCheckBoxBG(view: TextView, selected: Boolean) {

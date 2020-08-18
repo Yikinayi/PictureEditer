@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.BarUtils
 import yzx.app.editer.pages.ColorPickerFragment
 import yzx.app.editer.util.U
 
@@ -39,6 +40,8 @@ class ColorPickerActivity : AppCompatActivity() {
 
         //
         else {
+
+            BarUtils.setStatusBarLightMode(this, true)
 
             val id = View.generateViewId()
             setContentView(FrameLayout(this).apply {
