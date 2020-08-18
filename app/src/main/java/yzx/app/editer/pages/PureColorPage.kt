@@ -14,8 +14,10 @@ import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
 import kotlinx.android.synthetic.main.page_pure_color.*
 import kotlinx.coroutines.*
 import yzx.app.editer.R
+import yzx.app.editer.dta.PureColorShape
 import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.pages.abs.BaseEditPage
+import yzx.app.editer.pages.lateral.PureColorPreviewPage
 import yzx.app.editer.util.U
 import yzx.app.editer.util.dp2px
 
@@ -89,7 +91,7 @@ class PureColorPage : BaseEditPage() {
             if (widthStr.isNotBlank() && heightStr.isNotBlank()) {
                 val width = widthStr.toInt()
                 val height = heightStr.toInt()
-
+                PureColorPreviewPage.launch(shape, colorCircle.color, width, height)
             }
         }
     }
@@ -118,17 +120,14 @@ class PureColorPage : BaseEditPage() {
         arrayOf(shapeRect, shapeCircle, shapeTriangle)
     }
 
-    private var shape: Shape = Shape.Rect
+    private var shape: PureColorShape = PureColorShape.Rect
 
-    enum class Shape {
-        Circle, Rect, Triangle
-    }
 
     private fun makeShapeCheckbox() {
         shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeRect) }
-        shapeRect.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeRect) }; shape = Shape.Rect }
-        shapeCircle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeCircle) };shape = Shape.Circle }
-        shapeTriangle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeTriangle) }; shape = Shape.Triangle }
+        shapeRect.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeRect) }; shape = PureColorShape.Rect }
+        shapeCircle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeCircle) };shape = PureColorShape.Circle }
+        shapeTriangle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeTriangle) }; shape = PureColorShape.Triangle }
     }
 
     private fun setShapeCheckBoxBG(view: TextView, selected: Boolean) {
