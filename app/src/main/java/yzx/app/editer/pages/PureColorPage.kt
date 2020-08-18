@@ -1,13 +1,18 @@
 package yzx.app.editer.pages
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.VibrateUtils
+import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
 import kotlinx.android.synthetic.main.page_pure_color.*
+import kotlinx.coroutines.*
 import yzx.app.editer.R
 import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.pages.abs.BaseEditPage
@@ -23,6 +28,7 @@ class PureColorPage : BaseEditPage() {
         })
     }
 
+    private val scope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +42,7 @@ class PureColorPage : BaseEditPage() {
     }
 
     private fun colorLogic() {
-        colorCircle.color = Color.WHITE
+        colorCircle.color = getLastColor()
         colorCircle.setOnClickListener {
             ColorPicker.start(colorCircle.color) {
                 colorCircle.color = it
@@ -48,12 +54,30 @@ class PureColorPage : BaseEditPage() {
         confirm.setOnClickListener {
             val widthStr = widthInput.text.toString().trim()
             val heightStr = heightInput.text.toString().trim()
-            if (widthStr.isNotBlank() && heightStr.isNotBlank()) {
-                val width = widthStr.toInt()
-                val height = heightStr.toInt()
+            if (widthStr.isBlank()) {
+                noticeAnim(widthInput)
+                return@setOnClickListener
+            }
+            if (heightStr.isBlank()) {
+                noticeAnim(heightInput)
+                return@setOnClickListener
+            }
+            val width = widthStr.toInt()
+            val height = heightStr.toInt()
 
-            } else {
+        }
+    }
 
+    private fun noticeAnim(view: View) {
+        view.animate().cancel()
+        view.scaleX = 1f
+        view.scaleY = 1f
+        VibrateUtils.vibrate(300)
+        scope.launch {
+            repeat(6) {
+                if (it % 2 == 0) view.animate().scaleY(1.3f).scaleX(1.3f).setDuration(60).start()
+                else view.animate().scaleY(1f).scaleX(1f).setDuration(60).start()
+                delay(60)
             }
         }
     }
@@ -131,6 +155,25 @@ class PureColorPage : BaseEditPage() {
             preview.animate().cancel()
             preview.animate().translationX(0f).start()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.cancel()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        saveLastColor(colorCircle.color)
+    }
+
+
+    private fun saveLastColor(c: Int) {
+        getPreferences(Context.MODE_PRIVATE).edit().putInt("c", c).apply()
+    }
+
+    private fun getLastColor(): Int {
+        return getPreferences(Context.MODE_PRIVATE).getInt("c", Color.WHITE)
     }
 
 }
