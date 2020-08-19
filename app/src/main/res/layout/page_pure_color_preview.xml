@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:background="#ffffff">
 
 
     <FrameLayout
@@ -35,62 +36,58 @@
     </FrameLayout>
 
 
-    <LinearLayout
-        android:id="@+id/noticeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/titleLayout">
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_circle_notice" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" 图片尺寸较小, 实际生成图片可能会比较模糊"
-            android:textColor="#BBBBBB"
-            android:textSize="12dp" />
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/cacheButton"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#0088ff"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="保存到临时存储区"
-        android:textColor="#ffffff"
-        android:textSize="12dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageLayout" />
-
-
     <FrameLayout
         android:id="@+id/imageLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/titleLayout">
 
         <yzx.app.editer.widget.AlphaBackground
+            android:id="@+id/alphaBackground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <yzx.app.editer.widget.GeneralDrawView
+            android:id="@+id/drawView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <View
+            android:id="@+id/stroke"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_pure_color_sample" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageLayout">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cacheButton"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="#ffffff"
+            android:src="@drawable/ic_cache"
+            android:tintMode="multiply"
+            app:backgroundTint="#ffffff"
+            app:fabCustomSize="72dp" />
+
 
     </FrameLayout>
 

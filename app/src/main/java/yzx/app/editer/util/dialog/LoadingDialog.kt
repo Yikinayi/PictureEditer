@@ -39,7 +39,8 @@ fun Activity.showLoading() {
         val dialog = showCommonDialog(DialogInfo().apply {
             contentView = view
             cancelAble = false
-            dim = false
+            dim = true
+            dimAmount = 0.2f
         })
         map[this] = dialog
     } else {

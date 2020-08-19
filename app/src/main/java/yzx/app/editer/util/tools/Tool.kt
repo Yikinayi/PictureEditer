@@ -3,7 +3,9 @@ package yzx.app.editer.util.tools
 import android.graphics.Color
 import android.os.SystemClock
 import android.view.View
+import android.widget.Toast
 import yzx.app.editer.R
+import yzx.app.editer.util.U
 
 
 fun inverseColor(c: Int): Int {
@@ -23,5 +25,15 @@ fun View.setOnClickListenerPreventFast(gap: Int = 500, block: (View) -> Unit) {
             this.setTag(R.id.prevent_fast_click_tag, now)
             block.invoke(this)
         }
+    }
+}
+
+
+private var toast: Toast? = null
+
+fun toast(str: String) {
+    toast?.cancel()
+    toast = Toast.makeText(U.app, str, Toast.LENGTH_SHORT).apply {
+        show()
     }
 }

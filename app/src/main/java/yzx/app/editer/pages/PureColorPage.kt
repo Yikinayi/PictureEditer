@@ -66,6 +66,14 @@ class PureColorPage : BaseEditPage() {
             }
             val width = widthStr.toInt()
             val height = heightStr.toInt()
+            if (width < 200 || width > 2000) {
+                noticeAnim(px1)
+                return@setOnClickListener
+            }
+            if (height < 200 || height > 2000) {
+                noticeAnim(px2)
+                return@setOnClickListener
+            }
 
         }
     }
@@ -91,6 +99,14 @@ class PureColorPage : BaseEditPage() {
             if (widthStr.isNotBlank() && heightStr.isNotBlank()) {
                 val width = widthStr.toInt()
                 val height = heightStr.toInt()
+                if (width < 200 || width > 2000) {
+                    noticeAnim(px1)
+                    return@setOnClickListener
+                }
+                if (height < 200 || height > 2000) {
+                    noticeAnim(px2)
+                    return@setOnClickListener
+                }
                 PureColorPreviewPage.launch(shape, colorCircle.color, width, height)
             }
         }

@@ -17,6 +17,7 @@ class DialogInfo {
     var cancelTouchOutside = false
     var gravity = Gravity.CENTER
     var dim = true
+    var dimAmount = 0.4f
 }
 
 fun Activity.showCommonDialog(info: DialogInfo): Dialog {
@@ -29,7 +30,7 @@ fun Activity.showCommonDialog(info: DialogInfo): Dialog {
             dialog.window?.attributes?.height = info.height
             dialog.window?.attributes = dialog.window?.attributes
             if (info.dim)
-                dialog?.window?.attributes?.dimAmount = 0.4f
+                dialog?.window?.attributes?.dimAmount = info.dimAmount
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window?.setGravity(info.gravity)
             dialog.setContentView(info.contentView)

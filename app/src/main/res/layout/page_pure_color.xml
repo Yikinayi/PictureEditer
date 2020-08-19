@@ -65,9 +65,10 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/px1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  1~9999px"
+            android:text="  200~2000px"
             android:textColor="#CCCCCC"
             android:textSize="12dp" />
 
@@ -104,9 +105,10 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/px2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  1~9999px"
+            android:text="  200~2000px"
             android:textColor="#CCCCCC"
             android:textSize="12dp" />
 
