@@ -33,10 +33,10 @@ object BitmapAlmighty {
         p.style = Paint.Style.FILL
         p.color = color
         val path = Path()
-        path.lineTo(canvas.width / 2f, 0f)
-        path.moveTo(canvas.width.toFloat(), canvas.height.toFloat())
-        path.moveTo(0f, canvas.height.toFloat())
         path.moveTo(canvas.width / 2f, 0f)
+        path.lineTo(canvas.width.toFloat(), canvas.height.toFloat())
+        path.lineTo(0f, canvas.height.toFloat())
+        path.lineTo(canvas.width / 2f, 0f)
         path.close()
         canvas.drawPath(path, p)
     }
