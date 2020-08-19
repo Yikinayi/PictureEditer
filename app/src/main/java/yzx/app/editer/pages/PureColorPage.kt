@@ -173,7 +173,7 @@ class PureColorPage : BaseEditPage() {
 
     private fun setShapeCheckBoxBG(view: TextView, selected: Boolean) {
         view.tag = if (selected) shapeSelectedTag else null
-        view.setTextColor(if (selected) Color.parseColor("#89c3fd") else Color.parseColor("#999999"))
+        view.setTextColor(if (selected) Color.parseColor("#ffffff") else Color.parseColor("#666666"))
         view.setBackgroundResource(if (selected) R.drawable.bg_checkbox_single_selected else R.drawable.bg_checkbox_single_normal)
     }
 
