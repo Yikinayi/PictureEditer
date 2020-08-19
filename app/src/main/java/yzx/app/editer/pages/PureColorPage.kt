@@ -84,8 +84,8 @@ class PureColorPage : BaseEditPage() {
                 success = { bitmap ->
                     Storage.saveAsyncWithPermission(this, bitmap,
                         success = {
+                            dismissLoading()
                             toast("图片已保存到系统相册")
-                            finish()
                         },
                         failed = {
                             dismissLoading()
