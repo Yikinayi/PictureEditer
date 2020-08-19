@@ -102,7 +102,7 @@ class PureColorPreviewPage : AppCompatActivity() {
             },
             failed = {
                 dismissLoading()
-                toast("操作失败")
+                toast("操作失败, 内存不足")
             })
     }
 

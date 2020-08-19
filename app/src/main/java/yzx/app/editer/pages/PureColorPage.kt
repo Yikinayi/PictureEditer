@@ -15,11 +15,16 @@ import kotlinx.android.synthetic.main.page_pure_color.*
 import kotlinx.coroutines.*
 import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
+import yzx.app.editer.dta.Storage
 import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.pages.abs.BaseEditPage
 import yzx.app.editer.pages.lateral.PureColorPreviewPage
 import yzx.app.editer.util.U
+import yzx.app.editer.util.bmp.BitmapAlmighty
+import yzx.app.editer.util.dialog.dismissLoading
+import yzx.app.editer.util.dialog.showLoading
 import yzx.app.editer.util.dp2px
+import yzx.app.editer.util.tools.toast
 
 
 class PureColorPage : BaseEditPage() {
@@ -74,7 +79,24 @@ class PureColorPage : BaseEditPage() {
                 noticeAnim(px2)
                 return@setOnClickListener
             }
-
+            showLoading()
+            BitmapAlmighty.makePureColorAsync(shape, colorCircle.color, width, height,
+                success = { bitmap ->
+                    Storage.saveAsyncWithPermission(this, bitmap,
+                        success = {
+                            toast("图片已保存到系统相册")
+                            finish()
+                        },
+                        failed = {
+                            dismissLoading()
+                            bitmap.recycle()
+                            toast("操作失败, 请检查手机空间或权限")
+                        })
+                },
+                failed = {
+                    dismissLoading()
+                    toast("操作失败, 内存不足")
+                })
         }
     }
 
