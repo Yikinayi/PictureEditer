@@ -162,6 +162,16 @@
             android:text="三角形"
             android:textSize="11dp" />
 
+        <TextView
+            android:id="@+id/shapeOval"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:text="椭圆形"
+            android:textSize="11dp" />
+
     </LinearLayout>
 
 

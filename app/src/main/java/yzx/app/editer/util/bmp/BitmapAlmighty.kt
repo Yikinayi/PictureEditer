@@ -34,6 +34,7 @@ object BitmapAlmighty {
             PureColorShape.Rect -> drawPureColor_Rect(canvas, color)
             PureColorShape.Triangle -> drawPureColor_Triangle(canvas, color)
             PureColorShape.Circle -> drawPureColor_Circle(canvas, color)
+            PureColorShape.Oval -> drawPureColor_Oval(canvas, color)
         }
         return bitmap
     }
@@ -64,6 +65,13 @@ object BitmapAlmighty {
         p.color = color
         val r = min(canvas.width, canvas.height) / 2f
         canvas.drawCircle(canvas.width / 2f, canvas.height / 2f, r, p)
+    }
+
+    fun drawPureColor_Oval(canvas: Canvas, color: Int) {
+        val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        p.style = Paint.Style.FILL
+        p.color = color
+        canvas.drawOval(0f, 0f, canvas.width.toFloat(), canvas.height.toFloat(), p)
     }
 
 }

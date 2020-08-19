@@ -157,7 +157,7 @@ class PureColorPage : BaseEditPage() {
 
     private val shapeSelectedTag = "fuckyourmother_"
     private val shapeViews: Array<TextView> by lazy {
-        arrayOf(shapeRect, shapeCircle, shapeTriangle)
+        arrayOf(shapeRect, shapeCircle, shapeTriangle, shapeOval)
     }
 
     private var shape: PureColorShape = PureColorShape.Rect
@@ -168,6 +168,7 @@ class PureColorPage : BaseEditPage() {
         shapeRect.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeRect) }; shape = PureColorShape.Rect }
         shapeCircle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeCircle) };shape = PureColorShape.Circle }
         shapeTriangle.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeTriangle) }; shape = PureColorShape.Triangle }
+        shapeOval.setOnClickListener { shapeViews.forEach { setShapeCheckBoxBG(it, it == shapeOval) }; shape = PureColorShape.Oval }
     }
 
     private fun setShapeCheckBoxBG(view: TextView, selected: Boolean) {
@@ -214,7 +215,6 @@ class PureColorPage : BaseEditPage() {
     private fun getLastColor(): Int {
         return getPreferences(Context.MODE_PRIVATE).getInt("c", Color.WHITE)
     }
-
 
 
 }

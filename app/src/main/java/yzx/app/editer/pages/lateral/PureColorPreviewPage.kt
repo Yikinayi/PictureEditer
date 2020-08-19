@@ -4,9 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.blankj.utilcode.util.BarUtils
-import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
 import kotlinx.android.synthetic.main.page_pure_color_preview.*
 import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
@@ -76,6 +74,7 @@ class PureColorPreviewPage : AppCompatActivity() {
                 PureColorShape.Rect -> BitmapAlmighty.drawPureColor_Rect(canvas, color)
                 PureColorShape.Triangle -> BitmapAlmighty.drawPureColor_Triangle(canvas, color)
                 PureColorShape.Circle -> BitmapAlmighty.drawPureColor_Circle(canvas, color)
+                PureColorShape.Oval -> BitmapAlmighty.drawPureColor_Oval(canvas, color)
             }
         }
 
