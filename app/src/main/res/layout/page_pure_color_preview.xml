@@ -88,6 +88,30 @@
             app:backgroundTint="#ffffff"
             app:fabCustomSize="72dp" />
 
+        <LinearLayout
+            android:id="@+id/cachedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:alpha="0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:alpha="0.4"
+                android:src="@drawable/ic_cache" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  图片已经缓存到临时存储区~"
+                android:textColor="#BBBBBB"
+                android:textSize="14dp" />
+
+        </LinearLayout>
 
     </FrameLayout>
 

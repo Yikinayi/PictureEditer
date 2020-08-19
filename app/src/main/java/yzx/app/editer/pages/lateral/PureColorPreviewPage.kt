@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.BarUtils
+import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
 import kotlinx.android.synthetic.main.page_pure_color_preview.*
 import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
@@ -28,6 +29,9 @@ class PureColorPreviewPage : AppCompatActivity() {
             })
         }
     }
+
+
+    private var cached = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +79,17 @@ class PureColorPreviewPage : AppCompatActivity() {
         }
 
         cacheButton.setOnClickListenerPreventFast {
-
+            if (cached) return@setOnClickListenerPreventFast
+            animToCached()
         }
 
+    }
+
+
+    private fun animToCached() {
+        cached = true
+        cacheButton.animate().translationY(-dp2px(50).toFloat()).alpha(0f).setDuration(300).start()
+        cachedLayout.animate().alpha(1f).setDuration(300).start()
     }
 
 }
