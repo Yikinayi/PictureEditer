@@ -4,11 +4,28 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import yzx.app.editer.dta.PureColorShape
 import kotlin.math.min
 
 
 object BitmapAlmighty {
+
+    fun makePureColorAsync(shape: PureColorShape, color: Int, w: Int, h: Int, success: (Bitmap) -> Unit, failed: () -> Unit) {
+        GlobalScope.launch {
+            val bmp = withContext(Dispatchers.Default) {
+                var bmp: Bitmap? = null
+                kotlin.runCatching { bmp = makePureColor(shape, color, w, h) }
+                bmp
+            }
+            withContext(Dispatchers.Main) {
+                if (bmp != null) success.invoke(bmp) else failed.invoke()
+            }
+        }
+    }
 
     fun makePureColor(shape: PureColorShape, color: Int, w: Int, h: Int): Bitmap {
         val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
