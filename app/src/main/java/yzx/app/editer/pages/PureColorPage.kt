@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.VibrateUtils
 import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
 import kotlinx.android.synthetic.main.page_pure_color.*
@@ -46,6 +47,7 @@ class PureColorPage : BaseEditPage() {
         colorLogic()
         confirmLogic()
         previewLogic()
+        widthInput.postDelayed({ KeyboardUtils.showSoftInput(widthInput) }, 200)
     }
 
     private fun colorLogic() {
@@ -212,5 +214,7 @@ class PureColorPage : BaseEditPage() {
     private fun getLastColor(): Int {
         return getPreferences(Context.MODE_PRIVATE).getInt("c", Color.WHITE)
     }
+
+
 
 }

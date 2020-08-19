@@ -109,7 +109,7 @@ class PureColorPreviewPage : AppCompatActivity() {
 
     private fun animToCached() {
         cacheButton.setOnClickListener(null)
-        cacheButton.animate().translationY(-dp2px(50).toFloat()).alpha(0f).setDuration(300).start()
+        cacheButton.animate().translationX(dp2px(104).toFloat()).setDuration(300).start()
         cachedLayout.animate().alpha(1f).setDuration(300).start()
     }
 
