@@ -11,9 +11,11 @@ import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.VibrateUtils
-import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
-import kotlinx.android.synthetic.main.page_pure_color.*
-import kotlinx.coroutines.*
+import kotlinx.android.synthetic.main.page_pure_color2.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
 import yzx.app.editer.dta.Storage
@@ -40,8 +42,8 @@ class PureColorPage : BaseEditPage() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.page_pure_color)
-        BarUtils.setStatusBarColor(this, Color.parseColor("#f4f4f4"))
+        setContentView(R.layout.page_pure_color2)
+        BarUtils.setStatusBarColor(this, Color.parseColor("#0088ff"))
         makeShapeCheckbox()
         widthHeightInputLogic()
         colorLogic()
@@ -74,11 +76,11 @@ class PureColorPage : BaseEditPage() {
             val width = widthStr.toInt()
             val height = heightStr.toInt()
             if (width < 200 || width > 2000) {
-                noticeAnim(px1)
+                noticeAnim(widthInput)
                 return@setOnClickListener
             }
             if (height < 200 || height > 2000) {
-                noticeAnim(px2)
+                noticeAnim(heightInput)
                 return@setOnClickListener
             }
             showLoading()
@@ -103,6 +105,8 @@ class PureColorPage : BaseEditPage() {
     }
 
     private fun noticeAnim(view: View) {
+        view.pivotX = dp2px(50).toFloat()
+        view.pivotY = view.height / 2f
         view.animate().cancel()
         view.scaleX = 1f
         view.scaleY = 1f
@@ -124,11 +128,11 @@ class PureColorPage : BaseEditPage() {
                 val width = widthStr.toInt()
                 val height = heightStr.toInt()
                 if (width < 200 || width > 2000) {
-                    noticeAnim(px1)
+                    noticeAnim(widthInput)
                     return@setOnClickListener
                 }
                 if (height < 200 || height > 2000) {
-                    noticeAnim(px2)
+                    noticeAnim(heightInput)
                     return@setOnClickListener
                 }
                 PureColorPreviewPage.launch(shape, colorCircle.color, width, height)
