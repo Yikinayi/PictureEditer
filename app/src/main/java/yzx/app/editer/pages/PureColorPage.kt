@@ -43,7 +43,7 @@ class PureColorPage : BaseEditPage() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.page_pure_color2)
-        BarUtils.setStatusBarColor(this, Color.parseColor("#0088ff"))
+        BarUtils.setStatusBarColor(this, Color.parseColor("#f4f4f4"))
         makeShapeCheckbox()
         widthHeightInputLogic()
         colorLogic()
