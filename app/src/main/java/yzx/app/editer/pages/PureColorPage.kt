@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.VibrateUtils
-import kotlinx.android.synthetic.main.page_pure_color2.*
+import kotlinx.android.synthetic.main.page_pure_color.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -42,7 +42,7 @@ class PureColorPage : BaseEditPage() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.page_pure_color2)
+        setContentView(R.layout.page_pure_color)
         BarUtils.setStatusBarColor(this, Color.parseColor("#f4f4f4"))
         makeShapeCheckbox()
         widthHeightInputLogic()
