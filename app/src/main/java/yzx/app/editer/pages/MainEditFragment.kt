@@ -71,7 +71,7 @@ class MainEditFragment : Fragment() {
 
     private fun onItemClick(data: EditAbility) {
         when (data) {
-            EditAbility.Pure -> PureColorPage.launch()
+            EditAbility.Pure -> PureColorPage2.launch()
 
         }
     }

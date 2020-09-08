@@ -41,6 +41,9 @@
             android:name=".pages.PureColorPage"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".pages.PureColorPage2"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".pages.ability.ColorPickerActivity"
             android:screenOrientation="portrait" />
         <activity
