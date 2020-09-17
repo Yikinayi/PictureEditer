@@ -197,7 +197,7 @@ class Roller(context: Context, attrs: AttributeSet?) : FrameLayout(context, attr
 
     private val layoutPost = Runnable {
         if (specifiedIndex >= 0)
-            recyclerView.scrollToPosition(specifiedIndex)
+            (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(specifiedIndex, 0)
         specifiedIndex = -1
     }
     private var specifiedIndex = -1

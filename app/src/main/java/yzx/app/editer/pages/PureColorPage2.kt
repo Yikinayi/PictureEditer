@@ -84,7 +84,7 @@ class PureColorPage2 : AppCompatActivity() {
             val height = dp2px(160)
             val textSize = 16f
             val color = ResourcesCompat.getColor(resources, R.color.pure_color_wh, null)
-            val defaultIndex = 34
+            val defaultIndex = 30
             widthRoller.set(numberList, Roller.ItemInfo().apply {
                 this.givenViewHeight = height
                 this.maxTextSize = textSize
@@ -133,6 +133,26 @@ class PureColorPage2 : AppCompatActivity() {
         override fun onDestroyView() {
             endAnim()
             super.onDestroyView()
+        }
+
+        fun getWidth(): Int {
+            val default = 500
+            kotlin.runCatching {
+                val index = widthRoller.currentSelectedIndex
+                if (index < 0 || index > 180) return 500
+                return index * 10 + 200
+            }
+            return default
+        }
+
+        fun getHeight(): Int {
+            val default = 500
+            kotlin.runCatching {
+                val index = heightRoller.currentSelectedIndex
+                if (index < 0 || index > 180) return 500
+                return index * 10 + 200
+            }
+            return default
         }
     }
 
