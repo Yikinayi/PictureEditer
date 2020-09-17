@@ -1,7 +1,12 @@
 package yzx.app.editer.pages
 
+import android.animation.ValueAnimator
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,15 +33,16 @@ class PureColorPage2 : AppCompatActivity() {
         })
     }
 
-    private val f1 = WidthHeightFragment()
-    private val f2 = ShapeFragment()
-    private val f3 = ColorFragment()
-    private val f4 = PreviewFragment()
-    private val fs = arrayOf(f1, f2, f3, f4)
+    private val whFragment = WidthHeightFragment()
+    private val shapeFragment = ShapeFragment()
+    private val colorFragment = ColorFragment()
+    private val previewFragment = PreviewFragment()
+    private val fs = arrayOf(whFragment, shapeFragment, colorFragment, previewFragment)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedInstanceState?.clear()
         BarUtils.setStatusBarLightMode(window, true)
         setContentView(R.layout.page_pure_color2)
         back.setOnClickListener { finish() }
@@ -65,6 +71,8 @@ class PureColorPage2 : AppCompatActivity() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             initRoller()
+            setText()
+            startAnim()
         }
 
         private fun initRoller() {
@@ -76,17 +84,55 @@ class PureColorPage2 : AppCompatActivity() {
             val height = dp2px(160)
             val textSize = 16f
             val color = ResourcesCompat.getColor(resources, R.color.pure_color_wh, null)
-            val defaultIndex = 84
+            val defaultIndex = 34
             widthRoller.set(numberList, Roller.ItemInfo().apply {
                 this.givenViewHeight = height
                 this.maxTextSize = textSize
-                this.lineColor = replaceColorAlpha(color, 0.3f)
+                this.maxTextColor = color
+                this.minTextColor = replaceColorAlpha(color, 0.3f)
+                this.lineColor = 0
             }, defaultIndex)
             heightRoller.set(numberList, Roller.ItemInfo().apply {
                 this.givenViewHeight = height
                 this.maxTextSize = textSize
-                this.lineColor = replaceColorAlpha(color, 0.3f)
+                this.maxTextColor = color
+                this.minTextColor = replaceColorAlpha(color, 0.3f)
+                this.lineColor = 0
             }, defaultIndex)
+        }
+
+        private fun setText() {
+            val span = SpannableString(" (px)")
+            span.setSpan(AbsoluteSizeSpan(dp2px(12)), 0, span.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            span.setSpan(ForegroundColorSpan(Color.parseColor("#AAAAAA")), 0, span.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            widthText.append(span)
+            heightText.append(span)
+        }
+
+        private var animLeft: ValueAnimator? = null
+
+        private fun startAnim() {
+            endAnim()
+            val gap = dp2px(5).toFloat()
+            animLeft = ValueAnimator.ofFloat(0f, gap).setDuration(1000).apply {
+                repeatCount = ValueAnimator.INFINITE
+                repeatMode = ValueAnimator.REVERSE
+                addUpdateListener { anim ->
+                    arrow1?.translationX = anim.animatedValue as Float
+                    arrow3?.translationX = anim.animatedValue as Float
+                }
+                start()
+            }
+        }
+
+        private fun endAnim() {
+            animLeft?.cancel()
+            animLeft = null
+        }
+
+        override fun onDestroyView() {
+            endAnim()
+            super.onDestroyView()
         }
     }
 

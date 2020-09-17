@@ -14,15 +14,30 @@
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            android:text="宽高设置: "
-            android:textColor="@color/pure_color_wh"
-            android:textSize="15dp"
-            android:textStyle="italic|bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/pure_color_wh_tip" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="宽高设置: "
+                android:textColor="@color/pure_color_wh"
+                android:textSize="15dp"
+                android:textStyle="italic|bold" />
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -40,6 +55,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/widthText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -47,12 +63,36 @@
                     android:textColor="@color/pure_color_wh"
                     android:textSize="15dp" />
 
-                <yzx.app.editer.widget.Roller
-                    android:id="@+id/widthRoller"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp" />
+                    android:layout_marginRight="30dp">
+
+                    <yzx.app.editer.widget.Roller
+                        android:id="@+id/widthRoller"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/arrow1"
+                            android:layout_width="12dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:alpha="0.7"
+                            android:rotation="90"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/pure_color_wh_arrow" />
+
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -68,6 +108,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/heightText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -75,12 +116,35 @@
                     android:textColor="@color/pure_color_wh"
                     android:textSize="15dp" />
 
-                <yzx.app.editer.widget.Roller
-                    android:id="@+id/heightRoller"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp" />
+                    android:layout_marginRight="30dp">
+
+                    <yzx.app.editer.widget.Roller
+                        android:id="@+id/heightRoller"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/arrow3"
+                            android:layout_width="12dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:alpha="0.7"
+                            android:rotation="90"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/pure_color_wh_arrow" />
+
+
+                    </LinearLayout>
+                </FrameLayout>
 
             </LinearLayout>
 
