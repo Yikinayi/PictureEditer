@@ -4,6 +4,10 @@ import android.graphics.Color
 import android.os.SystemClock
 import android.view.View
 import android.widget.Toast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import yzx.app.editer.R
 import yzx.app.editer.util.U
 
@@ -25,5 +29,20 @@ fun View.setOnClickListenerPreventFast(gap: Int = 500, block: (View) -> Unit) {
             this.setTag(R.id.prevent_fast_click_tag, now)
             block.invoke(this)
         }
+    }
+}
+
+
+/**
+ * @param start 开始计时时间,  需要使用SystemClock.uptimeMillis()
+ * @param block 主线程回调
+ */
+fun runMinimumInterval(start: Long, interval: Long, block: () -> Unit) {
+    val now = SystemClock.uptimeMillis()
+    val realInterval = now - start
+    GlobalScope.launch(Dispatchers.Main) {
+        if (realInterval < interval)
+            delay(interval - realInterval)
+        block.invoke()
     }
 }
