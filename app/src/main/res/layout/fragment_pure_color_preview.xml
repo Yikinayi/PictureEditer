@@ -103,6 +103,57 @@
         </FrameLayout>
 
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="60dp"
+            android:animateLayoutChanges="true">
+
+            <LinearLayout
+                android:id="@+id/cachedLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/cachedIcon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_cache" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已经保存到临时存储区"
+                    android:textColor="#BBBBBB"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/noCacheLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/toCacheButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="保存到临时区" />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
 
     </androidx.cardview.widget.CardView>

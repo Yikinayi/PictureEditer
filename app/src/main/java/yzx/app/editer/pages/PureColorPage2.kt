@@ -301,6 +301,7 @@ class PureColorPage2 : AppCompatActivity() {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
+            BitmapAlmighty.tintImageView(cachedIcon, Color.parseColor("#BBBBBB"))
             hidePreview()
         }
 
@@ -338,10 +339,47 @@ class PureColorPage2 : AppCompatActivity() {
             }
             drawView.requestLayout()
             imageLayout.isVisible = true
+            showCacheLayout(w, h, color, shape)
+            toCacheButton.setOnClickListener { startCache(w, h, color, shape) }
+        }
+
+        private fun startCache(w: Int, h: Int, color: Int, shape: PureColorShape) {
+            activity?.showLoading()
+            BitmapAlmighty.makePureColorAsync(shape, color, w, h,
+                success = { bmp ->
+                    Storage.cacheAsync(bmp,
+                        success = {
+                            activity?.dismissLoading()
+                            bmp.recycle()
+                            cachedLayout.isVisible = true
+                            noCacheLayout.isVisible = false
+                            cachedInfo.add("${w}${h}${color}${shape}")
+                        },
+                        failed = {
+                            activity?.dismissLoading()
+                            bmp.recycle()
+                            toast("操作失败, 可能是手机存储空间不足")
+                        })
+                },
+                failed = {
+                    activity?.dismissLoading()
+                    toast("操作失败, 估计是内存不足")
+                })
+        }
+
+        private val cachedInfo = ArrayList<String>()
+
+        private fun showCacheLayout(w: Int, h: Int, color: Int, shape: PureColorShape) {
+            val key = "${w}${h}${color}${shape}"
+            val cached = cachedInfo.contains(key)
+            cachedLayout.isVisible = cached
+            noCacheLayout.isVisible = !cachedLayout.isVisible
         }
 
         fun hidePreview() {
             imageLayout.isVisible = false
+            cachedLayout.isVisible = false
+            noCacheLayout.isVisible = false
         }
     }
 
