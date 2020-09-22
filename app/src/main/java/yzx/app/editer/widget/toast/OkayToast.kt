@@ -33,7 +33,6 @@ private fun t(str: String, duration: Int) {
     val view = LayoutInflater.from(U.app).inflate(R.layout.lw_layout_toast, p, false)
     view.text.text = str
     toast = Toast(U.app)
-    toast!!.setGravity(Gravity.CENTER, 0, 0)
     toast!!.view = view
     toast!!.duration = duration
     toast!!.show()
