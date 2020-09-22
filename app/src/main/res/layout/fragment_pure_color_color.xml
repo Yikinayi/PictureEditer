@@ -14,6 +14,31 @@
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/tipIcon"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="选择颜色: "
+                android:textColor="@color/pure_color_page"
+                android:textSize="15dp"
+                android:textStyle="italic|bold" />
+
+        </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 
 

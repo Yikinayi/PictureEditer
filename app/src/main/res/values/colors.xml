@@ -4,7 +4,6 @@
     <color name="colorAccent">#FB00CA</color>
     <color name="colorStyle">#ffffff</color>
 
-    <color name="pure_color_wh">#505050</color>
-    <color name="pure_color_shape">#2196F3</color>
+    <color name="pure_color_page">#505050</color>
 
 </resources>

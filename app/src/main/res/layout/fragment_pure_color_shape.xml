@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="选择图形: "
-                android:textColor="@color/pure_color_shape"
+                android:textColor="@color/pure_color_page"
                 android:textSize="15dp"
                 android:textStyle="italic|bold" />
 
@@ -63,7 +63,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:background="@color/pure_color_shape" />
+                        android:background="@color/pure_color_page" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:text="矩形"
-                        android:textColor="@color/pure_color_shape"
+                        android:textColor="@color/pure_color_page"
                         android:textSize="13dp"
                         android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:text="三角形"
-                        android:textColor="@color/pure_color_shape"
+                        android:textColor="@color/pure_color_page"
                         android:textSize="13dp"
                         android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:text="椭圆"
-                        android:textColor="@color/pure_color_shape"
+                        android:textColor="@color/pure_color_page"
                         android:textSize="13dp"
                         android:textStyle="bold" />
 
@@ -174,7 +174,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:text="圆形"
-                        android:textColor="@color/pure_color_shape"
+                        android:textColor="@color/pure_color_page"
                         android:textSize="13dp"
                         android:textStyle="bold" />
 

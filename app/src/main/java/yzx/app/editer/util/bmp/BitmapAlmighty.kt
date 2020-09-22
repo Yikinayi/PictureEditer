@@ -1,14 +1,15 @@
 package yzx.app.editer.util.bmp
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+import androidx.core.graphics.drawable.DrawableCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import yzx.app.editer.dta.PureColorShape
+import yzx.app.editer.util.tools.replaceColorAlpha
 import kotlin.math.min
 
 
@@ -72,6 +73,29 @@ object BitmapAlmighty {
         p.style = Paint.Style.FILL
         p.color = color
         canvas.drawOval(0f, 0f, canvas.width.toFloat(), canvas.height.toFloat(), p)
+    }
+
+
+    fun tintDrawable(d: Drawable, color: Int) {
+        DrawableCompat.setTint(d, color)
+    }
+
+    fun tintBitmap(b: Bitmap, color: Int) {
+        repeat(b.width) { x ->
+            repeat(b.height) { y ->
+                val originColor = b.getPixel(x, y)
+                val alpha = Color.alpha(originColor)
+                if (alpha > 0) {
+                    val newColor = replaceColorAlpha(color, alpha / 255f)
+                    b.setPixel(x, y, newColor)
+                }
+            }
+        }
+    }
+
+    fun tintImageView(view: ImageView, color: Int) {
+        val d = view.drawable ?: return
+        tintDrawable(d, color)
     }
 
 }

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.blankj.utilcode.util.BarUtils
+import kotlinx.android.synthetic.main.fragment_pure_color_color.*
 import kotlinx.android.synthetic.main.fragment_pure_color_shape.*
 import kotlinx.android.synthetic.main.fragment_pure_color_shape.view.*
 import kotlinx.android.synthetic.main.fragment_pure_color_wh.*
@@ -87,7 +88,7 @@ class PureColorPage2 : AppCompatActivity() {
             }
             val height = dp2px(160)
             val textSize = 16f
-            val color = ResourcesCompat.getColor(resources, R.color.pure_color_wh, null)
+            val color = ResourcesCompat.getColor(resources, R.color.pure_color_page, null)
             val defaultIndex = 30
             widthRoller.set(numberList, Roller.ItemInfo().apply {
                 this.givenViewHeight = height
@@ -176,7 +177,7 @@ class PureColorPage2 : AppCompatActivity() {
             private set
 
         private fun drawShape() {
-            val color = ResourcesCompat.getColor(resources, R.color.pure_color_shape, null)
+            val color = ResourcesCompat.getColor(resources, R.color.pure_color_page, null)
             triangleShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Triangle(it, color) }
             ovalShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Oval(it, color) }
             circleShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Circle(it, color) }
@@ -192,7 +193,7 @@ class PureColorPage2 : AppCompatActivity() {
         private fun setSelectedUIByCurrent() {
             val layouts = arrayOf(rectLayout, triangleLayout, circleLayout, ovalLayout)
             fun allNormal() = layouts.forEach { it.setBackgroundColor(Color.TRANSPARENT) }
-            val selectedColor = replaceColorAlpha(ResourcesCompat.getColor(resources, R.color.pure_color_shape, null), 0.1f)
+            val selectedColor = replaceColorAlpha(ResourcesCompat.getColor(resources, R.color.pure_color_page, null), 0.1f)
             when (current) {
                 PureColorShape.Rect -> {
                     allNormal()
@@ -218,6 +219,10 @@ class PureColorPage2 : AppCompatActivity() {
     class ColorFragment : Fragment() {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             return inflater.inflate(R.layout.fragment_pure_color_color, container, false)
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
         }
     }
 
