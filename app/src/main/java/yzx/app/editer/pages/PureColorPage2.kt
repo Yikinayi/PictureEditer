@@ -37,6 +37,7 @@ import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.toHexColorString
 import yzx.app.editer.util.tools.replaceColorAlpha
 import yzx.app.editer.util.tools.runMinimumInterval
+import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 import yzx.app.editer.widget.Roller
 import yzx.app.editer.widget.toast.longToast
 import yzx.app.editer.widget.toast.toast
@@ -81,7 +82,7 @@ class PureColorPage2 : AppCompatActivity() {
                 else previewFragment.showPreview(getWidth(), getHeight(), getColor(), getShape())
             }
         })
-        confirm.setOnClickListener {
+        confirm.setOnClickListenerPreventFast {
             showLoading()
             val startTime = SystemClock.uptimeMillis()
             BitmapAlmighty.makePureColorAsync(getShape(), getColor(), getWidth(), getHeight(),
@@ -349,7 +350,7 @@ class PureColorPage2 : AppCompatActivity() {
             drawView.requestLayout()
             imageLayout.isVisible = true
             showCacheLayout(w, h, color, shape)
-            toCacheButton.setOnClickListener { startCache(w, h, color, shape) }
+            toCacheButton.setOnClickListenerPreventFast { startCache(w, h, color, shape) }
         }
 
         private fun startCache(w: Int, h: Int, color: Int, shape: PureColorShape) {
