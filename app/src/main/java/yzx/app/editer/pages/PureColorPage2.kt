@@ -17,9 +17,11 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.fragment_pure_color_shape.*
+import kotlinx.android.synthetic.main.fragment_pure_color_shape.view.*
 import kotlinx.android.synthetic.main.fragment_pure_color_wh.*
 import kotlinx.android.synthetic.main.page_pure_color2.*
 import yzx.app.editer.R
+import yzx.app.editer.dta.PureColorShape
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dp2px
@@ -166,7 +168,12 @@ class PureColorPage2 : AppCompatActivity() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             drawShape()
+            setClick()
+            setSelectedUIByCurrent()
         }
+
+        var current: PureColorShape = PureColorShape.Rect
+            private set
 
         private fun drawShape() {
             val color = ResourcesCompat.getColor(resources, R.color.pure_color_shape, null)
@@ -174,6 +181,38 @@ class PureColorPage2 : AppCompatActivity() {
             ovalShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Oval(it, color) }
             circleShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Circle(it, color) }
         }
+
+        private fun setClick() {
+            rectLayout.setOnClickListener { current = PureColorShape.Rect; setSelectedUIByCurrent() }
+            triangleLayout.setOnClickListener { current = PureColorShape.Triangle; setSelectedUIByCurrent() }
+            ovalLayout.setOnClickListener { current = PureColorShape.Oval; setSelectedUIByCurrent() }
+            circleLayout.setOnClickListener { current = PureColorShape.Circle; setSelectedUIByCurrent() }
+        }
+
+        private fun setSelectedUIByCurrent() {
+            val layouts = arrayOf(rectLayout, triangleLayout, circleLayout, ovalLayout)
+            fun allNormal() = layouts.forEach { it.setBackgroundColor(Color.TRANSPARENT) }
+            val selectedColor = replaceColorAlpha(ResourcesCompat.getColor(resources, R.color.pure_color_shape, null), 0.1f)
+            when (current) {
+                PureColorShape.Rect -> {
+                    allNormal()
+                    rectLayout.setBackgroundColor(selectedColor)
+                }
+                PureColorShape.Triangle -> {
+                    allNormal()
+                    triangleLayout.setBackgroundColor(selectedColor)
+                }
+                PureColorShape.Circle -> {
+                    allNormal()
+                    circleLayout.setBackgroundColor(selectedColor)
+                }
+                PureColorShape.Oval -> {
+                    allNormal()
+                    ovalLayout.setBackgroundColor(selectedColor)
+                }
+            }
+        }
+
     }
 
     class ColorFragment : Fragment() {
