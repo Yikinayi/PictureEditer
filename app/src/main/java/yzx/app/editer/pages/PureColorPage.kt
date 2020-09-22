@@ -27,7 +27,7 @@ import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dialog.dismissLoading
 import yzx.app.editer.util.dialog.showLoading
 import yzx.app.editer.util.dp2px
-import yzx.app.editer.util.tools.toast
+import yzx.app.editer.widget.toast.toast
 
 
 @Deprecated(message = "use PureColorPicker2 instead")
