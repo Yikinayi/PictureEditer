@@ -48,7 +48,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
+            android:foregroundTint="@color/pure_color_page"
             android:src="@drawable/confirm_right"
+            android:tint="@color/pure_color_page"
             app:backgroundTint="#ffffff"
             app:elevation="8dp"
             app:fabCustomSize="60dp" />

@@ -15,6 +15,11 @@ class ColorCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs
             field = value
             invalidate()
         }
+    var stroke = 0
+        set(value) {
+            field = value
+            invalidate()
+        }
 
 
     private val path = Path()
@@ -27,6 +32,10 @@ class ColorCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs
     }
     private val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
+    }
+    private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = dp2px(1).toFloat()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -54,6 +63,11 @@ class ColorCircle(context: Context?, attrs: AttributeSet?) : View(context, attrs
 
         paint.color = color
         canvas.drawCircle(hw, hh, r, paint)
+
+        if (stroke != 0) {
+            strokePaint.color = stroke
+            canvas.drawCircle(hw, hh, r - strokePaint.strokeWidth / 2f, strokePaint)
+        }
     }
 
 

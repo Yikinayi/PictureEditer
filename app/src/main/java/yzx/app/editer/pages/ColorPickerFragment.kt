@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_color_picker.*
 import yzx.app.editer.R
+import yzx.app.editer.util.toHexColorString
 import yzx.app.editer.util.tools.replaceColorAlpha
 import java.util.*
 
@@ -137,21 +138,8 @@ class ColorPickerFragment : Fragment() {
         alphaInput.addTextChangedListener(textWatcher)
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setHexText(color: Int) {
-        val a = Color.alpha(color)
-        val r = Color.red(color)
-        val g = Color.green(color)
-        val b = Color.blue(color)
-        var aStr = Integer.toHexString(a).toUpperCase(Locale.ROOT)
-        if (aStr.length < 2) aStr = "0${aStr}"
-        var rStr = Integer.toHexString(r).toUpperCase(Locale.ROOT)
-        if (rStr.length < 2) rStr = "0${rStr}"
-        var gStr = Integer.toHexString(g).toUpperCase(Locale.ROOT)
-        if (gStr.length < 2) gStr = "0${gStr}"
-        var bStr = Integer.toHexString(b).toUpperCase(Locale.ROOT)
-        if (bStr.length < 2) bStr = "0${bStr}"
-        hexText.text = "${aStr}${rStr}${gStr}${bStr}"
+        hexText.text = color.toHexColorString()
     }
 
 }

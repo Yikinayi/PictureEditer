@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,7 +26,8 @@
             <ImageView
                 android:id="@+id/tipIcon"
                 android:layout_width="18dp"
-                android:layout_height="18dp" />
+                android:layout_height="18dp"
+                android:src="@drawable/pure_color_color_tip" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,6 +40,48 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="70dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/colorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/pure_color_page"
+                android:textSize="15dp"
+                tools:text="色值 :  #5FABCC8D" />
+
+            <TextView
+                android:id="@+id/colorText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/pure_color_page"
+                android:textSize="15dp"
+                tools:text="ARGB :  255, 62, 25, 98" />
+
+            <yzx.app.editer.widget.ColorCircle
+                android:id="@+id/colorCircle"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="20dp"
+                android:text="点击切换颜色 ↑"
+                android:textColor="#CCCCCC"
+                android:textSize="13dp" />
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

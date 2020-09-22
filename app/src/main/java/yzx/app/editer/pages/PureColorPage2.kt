@@ -1,6 +1,8 @@
 package yzx.app.editer.pages
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -23,9 +25,11 @@ import kotlinx.android.synthetic.main.fragment_pure_color_wh.*
 import kotlinx.android.synthetic.main.page_pure_color2.*
 import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
+import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dp2px
+import yzx.app.editer.util.toHexColorString
 import yzx.app.editer.util.tools.replaceColorAlpha
 import yzx.app.editer.widget.Roller
 
@@ -217,13 +221,40 @@ class PureColorPage2 : AppCompatActivity() {
     }
 
     class ColorFragment : Fragment() {
+        private val sp = U.app.getSharedPreferences("pure_color_page", Context.MODE_PRIVATE)
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             return inflater.inflate(R.layout.fragment_pure_color_color, container, false)
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
+            invalidate()
+            colorCircle.setOnClickListener {
+                ColorPicker.start(initColor = current) {
+                    current = it
+                    invalidate()
+                }
+            }
         }
+
+        var current = getLastColor()
+            private set
+
+        @SuppressLint("SetTextI18n")
+        private fun invalidate() {
+            colorText.text = "色值 : #${current.toHexColorString()}"
+            colorText2.text = "ARGB : ${Color.alpha(current)}, ${Color.red(current)}, ${Color.green(current)}, ${Color.blue(current)}, "
+            colorCircle.color = current
+            colorCircle.stroke = Color.parseColor("#CCCCCC")
+        }
+
+        override fun onDestroyView() {
+            super.onDestroyView()
+            saveColor()
+        }
+
+        private fun saveColor() = sp.edit().putInt("color_3", current).apply()
+        private fun getLastColor(): Int = sp.getInt("color_3", Color.WHITE)
     }
 
     class PreviewFragment : Fragment() {
