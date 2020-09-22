@@ -18,6 +18,7 @@ import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 import yzx.app.editer.util.tools.toast
 
 
+@Deprecated(message = "use PureColorPicker2 instead")
 class PureColorPreviewPage : AppCompatActivity() {
 
     companion object {

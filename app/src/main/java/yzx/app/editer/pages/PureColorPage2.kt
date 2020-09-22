@@ -17,24 +17,25 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.fragment_pure_color_color.*
 import kotlinx.android.synthetic.main.fragment_pure_color_preview.*
 import kotlinx.android.synthetic.main.fragment_pure_color_shape.*
-import kotlinx.android.synthetic.main.fragment_pure_color_shape.view.*
 import kotlinx.android.synthetic.main.fragment_pure_color_wh.*
 import kotlinx.android.synthetic.main.page_pure_color2.*
-import kotlinx.android.synthetic.main.page_pure_color2.back
 import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
+import yzx.app.editer.dta.Storage
 import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
+import yzx.app.editer.util.dialog.dismissLoading
+import yzx.app.editer.util.dialog.showLoading
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.toHexColorString
 import yzx.app.editer.util.tools.replaceColorAlpha
+import yzx.app.editer.util.tools.toast
 import yzx.app.editer.widget.Roller
 
 
@@ -61,7 +62,7 @@ class PureColorPage2 : AppCompatActivity() {
         back.setOnClickListener { finish() }
         viewPager.offscreenPageLimit = fs.size
         viewPager.pageMargin = -dp2px(60)
-        viewPager.adapter = object : FragmentPagerAdapter(supportFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        viewPager.adapter = object : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int): Fragment = fs[position]
             override fun getCount(): Int = fs.size
         }
@@ -78,7 +79,25 @@ class PureColorPage2 : AppCompatActivity() {
             }
         })
         confirm.setOnClickListener {
-
+            showLoading()
+            BitmapAlmighty.makePureColorAsync(getShape(), getColor(), getWidth(), getHeight(),
+                success = { bitmap ->
+                    Storage.saveAsyncWithPermission(this, bitmap,
+                        success = {
+                            dismissLoading()
+                            bitmap.recycle()
+                            toast("OK, 图片已保存到系统相册")
+                        },
+                        failed = {
+                            dismissLoading()
+                            bitmap.recycle()
+                            toast("操作失败, 可能是手机空间不足或没有权限")
+                        })
+                },
+                failed = {
+                    dismissLoading()
+                    toast("操作失败, 可能是内存不足")
+                })
         }
     }
 

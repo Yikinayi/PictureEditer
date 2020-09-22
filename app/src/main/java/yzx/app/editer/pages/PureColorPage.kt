@@ -30,6 +30,7 @@ import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.tools.toast
 
 
+@Deprecated(message = "use PureColorPicker2 instead")
 class PureColorPage : BaseEditPage() {
 
     companion object {
