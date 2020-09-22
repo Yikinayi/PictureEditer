@@ -145,11 +145,32 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <LinearLayout
                     android:id="@+id/toCacheButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="保存到临时区" />
+                    android:layout_height="36dp"
+                    android:background="#F0F0F0"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_cache"
+                        app:tint="@color/pure_color_page" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="保存到临时区"
+                        android:textColor="@color/pure_color_page"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
