@@ -16,10 +16,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.blankj.utilcode.util.BarUtils
+import kotlinx.android.synthetic.main.fragment_pure_color_shape.*
 import kotlinx.android.synthetic.main.fragment_pure_color_wh.*
 import kotlinx.android.synthetic.main.page_pure_color2.*
 import yzx.app.editer.R
 import yzx.app.editer.util.U
+import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.tools.replaceColorAlpha
 import yzx.app.editer.widget.Roller
@@ -159,6 +161,18 @@ class PureColorPage2 : AppCompatActivity() {
     class ShapeFragment : Fragment() {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             return inflater.inflate(R.layout.fragment_pure_color_shape, container, false)
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            drawShape()
+        }
+
+        private fun drawShape() {
+            val color = ResourcesCompat.getColor(resources, R.color.pure_color_shape, null)
+            triangleShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Triangle(it, color) }
+            ovalShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Oval(it, color) }
+            circleShapeImage.onDraw = { BitmapAlmighty.drawPureColor_Circle(it, color) }
         }
     }
 
