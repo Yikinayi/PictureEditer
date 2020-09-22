@@ -14,15 +14,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.fragment_pure_color_color.*
+import kotlinx.android.synthetic.main.fragment_pure_color_preview.*
 import kotlinx.android.synthetic.main.fragment_pure_color_shape.*
 import kotlinx.android.synthetic.main.fragment_pure_color_shape.view.*
 import kotlinx.android.synthetic.main.fragment_pure_color_wh.*
 import kotlinx.android.synthetic.main.page_pure_color2.*
+import kotlinx.android.synthetic.main.page_pure_color2.back
 import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
 import yzx.app.editer.pages.ability.ColorPicker
@@ -61,6 +65,18 @@ class PureColorPage2 : AppCompatActivity() {
             override fun getItem(position: Int): Fragment = fs[position]
             override fun getCount(): Int = fs.size
         }
+        fun getWidth() = whFragment.getWidth()
+        fun getHeight() = whFragment.getHeight()
+        fun getShape() = shapeFragment.current
+        fun getColor() = colorFragment.current
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) = Unit
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+            override fun onPageSelected(position: Int) {
+                if (fs[position] != previewFragment) previewFragment.hidePreview()
+                else previewFragment.showPreview(getWidth(), getHeight(), getColor(), getShape())
+            }
+        })
         confirm.setOnClickListener {
 
         }
@@ -257,9 +273,50 @@ class PureColorPage2 : AppCompatActivity() {
         private fun getLastColor(): Int = sp.getInt("color_3", Color.WHITE)
     }
 
+
     class PreviewFragment : Fragment() {
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             return inflater.inflate(R.layout.fragment_pure_color_preview, container, false)
+        }
+
+        fun showPreview(w: Int, h: Int, color: Int, shape: PureColorShape) {
+            val len = imageLayout.layoutParams.width
+            if (w > h) {
+                alphaBackground.layoutParams.width = len
+                alphaBackground.layoutParams.height = (alphaBackground.layoutParams.width / w.toFloat() * h).toInt()
+                drawView.layoutParams.width = len
+                drawView.layoutParams.height = (drawView.layoutParams.width / w.toFloat() * h).toInt()
+                stroke.layoutParams.width = len
+                stroke.layoutParams.height = (stroke.layoutParams.width / w.toFloat() * h).toInt()
+            } else if (w < h) {
+                alphaBackground.layoutParams.height = len
+                alphaBackground.layoutParams.width = (alphaBackground.layoutParams.height / h.toFloat() * w).toInt()
+                drawView.layoutParams.height = len
+                drawView.layoutParams.width = (drawView.layoutParams.height / h.toFloat() * w).toInt()
+                stroke.layoutParams.height = len
+                stroke.layoutParams.width = (stroke.layoutParams.height / h.toFloat() * w).toInt()
+            } else {
+                alphaBackground.layoutParams.height = len
+                alphaBackground.layoutParams.width = len
+                drawView.layoutParams.height = len
+                drawView.layoutParams.width = len
+                stroke.layoutParams.height = len
+                stroke.layoutParams.width = len
+            }
+            drawView.onDraw = { canvas ->
+                when (shape) {
+                    PureColorShape.Rect -> BitmapAlmighty.drawPureColor_Rect(canvas, color)
+                    PureColorShape.Triangle -> BitmapAlmighty.drawPureColor_Triangle(canvas, color)
+                    PureColorShape.Circle -> BitmapAlmighty.drawPureColor_Circle(canvas, color)
+                    PureColorShape.Oval -> BitmapAlmighty.drawPureColor_Oval(canvas, color)
+                }
+            }
+            drawView.requestLayout()
+            imageLayout.isVisible = true
+        }
+
+        fun hidePreview() {
+            imageLayout.isVisible = false
         }
     }
 
