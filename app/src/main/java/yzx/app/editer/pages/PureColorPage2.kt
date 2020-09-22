@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
@@ -35,6 +36,7 @@ import yzx.app.editer.util.dialog.showLoading
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.toHexColorString
 import yzx.app.editer.util.tools.replaceColorAlpha
+import yzx.app.editer.util.tools.runMinimumInterval
 import yzx.app.editer.widget.Roller
 import yzx.app.editer.widget.toast.longToast
 import yzx.app.editer.widget.toast.toast
@@ -81,23 +83,30 @@ class PureColorPage2 : AppCompatActivity() {
         })
         confirm.setOnClickListener {
             showLoading()
+            val startTime = SystemClock.uptimeMillis()
             BitmapAlmighty.makePureColorAsync(getShape(), getColor(), getWidth(), getHeight(),
                 success = { bitmap ->
                     Storage.saveAsyncWithPermission(this, bitmap,
                         success = {
-                            dismissLoading()
-                            bitmap.recycle()
-                            toast("OK, 图片已保存到系统相册")
+                            runMinimumInterval(startTime, 1400) {
+                                dismissLoading()
+                                bitmap.recycle()
+                                toast("OK, 图片已保存到系统相册")
+                            }
                         },
                         failed = {
-                            dismissLoading()
-                            bitmap.recycle()
-                            longToast("操作失败, 可能是手机空间不足或没有权限")
+                            runMinimumInterval(startTime, 1200) {
+                                dismissLoading()
+                                bitmap.recycle()
+                                longToast("操作失败, 可能是手机空间不足或没有权限")
+                            }
                         })
                 },
                 failed = {
-                    dismissLoading()
-                    toast("操作失败, 可能是内存不足")
+                    runMinimumInterval(startTime, 1200) {
+                        dismissLoading()
+                        toast("操作失败, 可能是内存不足")
+                    }
                 })
         }
     }
@@ -345,25 +354,32 @@ class PureColorPage2 : AppCompatActivity() {
 
         private fun startCache(w: Int, h: Int, color: Int, shape: PureColorShape) {
             activity?.showLoading()
+            val startTime = SystemClock.uptimeMillis()
             BitmapAlmighty.makePureColorAsync(shape, color, w, h,
                 success = { bmp ->
                     Storage.cacheAsync(bmp,
                         success = {
-                            activity?.dismissLoading()
-                            bmp.recycle()
-                            cachedLayout.isVisible = true
-                            noCacheLayout.isVisible = false
-                            cachedInfo.add("${w}${h}${color}${shape}")
+                            runMinimumInterval(startTime, 1400) {
+                                activity?.dismissLoading()
+                                bmp.recycle()
+                                cachedLayout.isVisible = true
+                                noCacheLayout.isVisible = false
+                                cachedInfo.add("${w}${h}${color}${shape}")
+                            }
                         },
                         failed = {
-                            activity?.dismissLoading()
-                            bmp.recycle()
-                            toast("操作失败, 可能是手机存储空间不足")
+                            runMinimumInterval(startTime, 1200) {
+                                activity?.dismissLoading()
+                                bmp.recycle()
+                                toast("操作失败, 可能是手机存储空间不足")
+                            }
                         })
                 },
                 failed = {
-                    activity?.dismissLoading()
-                    toast("操作失败, 估计是内存不足")
+                    runMinimumInterval(startTime, 1200) {
+                        activity?.dismissLoading()
+                        toast("操作失败, 估计是内存不足")
+                    }
                 })
         }
 
