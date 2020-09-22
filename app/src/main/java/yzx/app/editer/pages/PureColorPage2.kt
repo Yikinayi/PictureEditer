@@ -279,6 +279,11 @@ class PureColorPage2 : AppCompatActivity() {
             return inflater.inflate(R.layout.fragment_pure_color_preview, container, false)
         }
 
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            hidePreview()
+        }
+
         fun showPreview(w: Int, h: Int, color: Int, shape: PureColorShape) {
             val len = imageLayout.layoutParams.width
             if (w > h) {
