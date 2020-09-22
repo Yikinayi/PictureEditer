@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_color_picker.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 object U {
@@ -41,3 +44,6 @@ fun Int.toHexColorString(): String {
 }
 
 
+fun runOnMain(block: () -> Unit) {
+    GlobalScope.launch(Dispatchers.Main) { block() }
+}

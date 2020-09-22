@@ -27,13 +27,3 @@ fun View.setOnClickListenerPreventFast(gap: Int = 500, block: (View) -> Unit) {
         }
     }
 }
-
-
-private var toast: Toast? = null
-
-fun toast(str: String) {
-    toast?.cancel()
-    toast = Toast.makeText(U.app, str, Toast.LENGTH_SHORT).apply {
-        show()
-    }
-}

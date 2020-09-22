@@ -35,8 +35,9 @@ import yzx.app.editer.util.dialog.showLoading
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.toHexColorString
 import yzx.app.editer.util.tools.replaceColorAlpha
-import yzx.app.editer.util.tools.toast
 import yzx.app.editer.widget.Roller
+import yzx.app.editer.widget.toast.longToast
+import yzx.app.editer.widget.toast.toast
 
 
 class PureColorPage2 : AppCompatActivity() {
@@ -91,7 +92,7 @@ class PureColorPage2 : AppCompatActivity() {
                         failed = {
                             dismissLoading()
                             bitmap.recycle()
-                            toast("操作失败, 可能是手机空间不足或没有权限")
+                            longToast("操作失败, 可能是手机空间不足或没有权限")
                         })
                 },
                 failed = {
