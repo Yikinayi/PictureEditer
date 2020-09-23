@@ -13,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_main_edit.view.*
 import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
 import yzx.app.editer.R
+import yzx.app.editer.dta.AppConfig
 import yzx.app.editer.dta.EditAbility
+import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.inflate
 import yzx.app.editer.util.permission.PermissionRequester
 import yzx.app.editer.util.sysResource.SystemPhotograph
 import yzx.app.editer.widget.NoMoreAnimationView
+import yzx.app.editer.widget.toast.toast
 
 
 class MainEditFragment : Fragment() {
@@ -72,19 +75,30 @@ class MainEditFragment : Fragment() {
     private fun onItemClick(data: EditAbility) {
         when (data) {
             EditAbility.Pure -> PureColorPage2.launch()
+            EditAbility.Rotate -> getPicture { RotationPage.launch(it) }
 
         }
     }
 
-    private fun getPicture(block: (String) -> String) {
+    private fun getPicture(block: (String) -> Unit) {
         val activity = activity ?: return
         PermissionRequester.request(activity, Manifest.permission.READ_EXTERNAL_STORAGE) { result ->
             if (result) {
                 SystemPhotograph.request(activity) { path ->
                     if (!path.isBlank()) {
-                        block.invoke(path)
+                        val wh = BitmapAlmighty.getImageWidthHeight(path)
+                        val width = wh[0]
+                        val height = wh[1]
+                        if (width <= 0 || height <= 0) {
+                            toast("图片有问题,请重选")
+                        } else if (width < AppConfig.minEditSupportImageSize || height < AppConfig.minEditSupportImageSize) {
+                            toast("图片太小啦")
+                        } else
+                            block.invoke(path)
                     }
                 }
+            } else {
+                toast("没有权限啊")
             }
         }
     }

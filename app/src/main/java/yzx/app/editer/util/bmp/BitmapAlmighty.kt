@@ -98,4 +98,14 @@ object BitmapAlmighty {
         tintDrawable(d, color)
     }
 
+
+    fun getImageWidthHeight(path: String): IntArray {
+        val option = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(path, option)
+        return IntArray(2).apply {
+            set(0, option.outWidth)
+            set(1, option.outHeight)
+        }
+    }
+
 }
