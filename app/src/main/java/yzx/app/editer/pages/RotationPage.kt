@@ -12,6 +12,7 @@ import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.widget.toast.toast
+import kotlin.math.sqrt
 
 
 class RotationPage : AppCompatActivity() {
@@ -52,6 +53,7 @@ class RotationPage : AppCompatActivity() {
     }
 
     private fun start() {
+        val bitmap = bitmap!!
         setContentView(R.layout.page_rotation)
 
         back.setOnClickListener { finish() }
@@ -62,10 +64,18 @@ class RotationPage : AppCompatActivity() {
             }
         }
 
-        imageContainer.layoutParams.width = resources.displayMetrics.widthPixels
-        imageContainer.layoutParams.height = resources.displayMetrics.widthPixels
+        val len = resources.displayMetrics.widthPixels
+        imageContainer.layoutParams.width = len
+        imageContainer.layoutParams.height = len
         imageContainer.requestLayout()
 
+        val scale = bitmap.width.toFloat() / bitmap.height
+        val shouldWidth = sqrt((len * len) / (1 + (1 / (scale * scale))))
+        val shouldHeight = shouldWidth / scale
+        image.layoutParams.width = shouldWidth.toInt()
+        image.layoutParams.height = shouldHeight.toInt()
+        image.requestLayout()
+        image.setImageBitmap(bitmap)
 
     }
 
