@@ -2,6 +2,7 @@ package yzx.app.editer.pages
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -38,7 +39,8 @@ class RotationPage : AppCompatActivity() {
         }
 
         savedInstanceState?.clear()
-        BarUtils.setStatusBarLightMode(window, true)
+        BarUtils.setStatusBarLightMode(window, false)
+        window.statusBarColor = Color.BLACK
 
         BitmapAlmighty.getBitmapUnderMaxSupport(path,
             complete = {
