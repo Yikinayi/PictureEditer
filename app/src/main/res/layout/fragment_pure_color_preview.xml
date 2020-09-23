@@ -148,7 +148,7 @@
                 <LinearLayout
                     android:id="@+id/toCacheButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="32dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -157,27 +157,14 @@
                         android:layout_width="22dp"
                         android:layout_height="match_parent" />
 
-                    <FrameLayout
-                        android:layout_width="15dp"
-                        android:layout_height="36dp"
-                        android:background="#F0F0F0">
-
-                        <ImageView
-                            android:layout_width="13dp"
-                            android:layout_height="13dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_cache"
-                            app:tint="@color/pure_color_page" />
-                    </FrameLayout>
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="#F0F0F0"
                         android:gravity="center"
-                        android:paddingLeft="5dp"
+                        android:paddingLeft="2dp"
                         android:paddingRight="10dp"
-                        android:text="结果保存到临时区"
+                        android:text=" 结果保存到临时区"
                         android:textColor="@color/pure_color_page"
                         android:textSize="12dp" />
 
