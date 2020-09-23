@@ -348,6 +348,8 @@ class PureColorPage2 : AppCompatActivity() {
                 }
             }
             drawView.requestLayout()
+            labelTriangle.color = Color.parseColor("#F0F0F0")
+            labelTriangle.pointColor = Color.parseColor("#BBBBBB")
             imageLayout.isVisible = true
             showCacheLayout(w, h, color, shape)
             toCacheButton.setOnClickListenerPreventFast { startCache(w, h, color, shape) }
