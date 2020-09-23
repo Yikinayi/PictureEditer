@@ -4,11 +4,21 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.core.graphics.drawable.DrawableCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.BaseTarget
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.ViewTarget
+import com.bumptech.glide.request.transition.Transition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import yzx.app.editer.dta.AppConfig
 import yzx.app.editer.dta.PureColorShape
+import yzx.app.editer.util.U
 import yzx.app.editer.util.tools.replaceColorAlpha
 import kotlin.math.min
 
@@ -105,6 +115,23 @@ object BitmapAlmighty {
         return IntArray(2).apply {
             set(0, option.outWidth)
             set(1, option.outHeight)
+        }
+    }
+
+    fun getBitmapUnderMaxSupport(path: String, complete: (Bitmap) -> Unit, error: () -> Unit) {
+        val (w, h) = getImageWidthHeight(path)
+        if (w <= 0 || h <= 0) {
+            error.invoke()
+        } else {
+            val shouldWidth = min(w, AppConfig.maxEditImageSize)
+            val shouldHeight = min(h, AppConfig.maxEditImageSize)
+            Glide.with(U.app).asBitmap().load(path).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+                .override(shouldWidth, shouldHeight)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onLoadCleared(placeholder: Drawable?) = Unit
+                    override fun onLoadFailed(errorDrawable: Drawable?) = error.invoke()
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) = complete.invoke(resource)
+                })
         }
     }
 

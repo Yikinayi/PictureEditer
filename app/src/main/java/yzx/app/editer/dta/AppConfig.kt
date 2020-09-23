@@ -4,7 +4,7 @@ import yzx.app.editer.util.dp2px
 
 object AppConfig {
 
-    val minEditSupportImageSize = 62
-    val maxEditImageSize = dp2px(2000)
+    val minEditSupportImageSize = 24
+    val maxEditImageSize = 2000
 
 }

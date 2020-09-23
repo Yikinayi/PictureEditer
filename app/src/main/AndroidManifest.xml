@@ -49,6 +49,9 @@
         <activity
             android:name=".pages.lateral.PureColorPreviewPage"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.RotationPage"
+            android:screenOrientation="portrait" />
 
     </application>
 
