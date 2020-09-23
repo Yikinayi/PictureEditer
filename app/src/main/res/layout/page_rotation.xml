@@ -58,6 +58,7 @@
     </FrameLayout>
 
     <yzx.app.editer.widget.a.RotationRing
+        android:id="@+id/ring"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"

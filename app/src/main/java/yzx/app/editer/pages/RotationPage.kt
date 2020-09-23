@@ -79,6 +79,7 @@ class RotationPage : AppCompatActivity() {
         image.requestLayout()
         image.setImageBitmap(bitmap)
 
+        ring.onDegreeChangedListener = { image.rotation = it }
     }
 
 

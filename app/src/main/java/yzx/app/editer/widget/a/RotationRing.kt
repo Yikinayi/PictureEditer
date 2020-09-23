@@ -1,20 +1,24 @@
 package yzx.app.editer.widget.a
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.widget.FrameLayout
-import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.view_rotation_ring.view.*
 import yzx.app.editer.R
-import yzx.app.editer.util.U
+import yzx.app.editer.util.RevolutionGesture
 import yzx.app.editer.util.dp2px
 import kotlin.math.min
 
 
+@SuppressLint("ClickableViewAccessibility", "SetTextI18n")
 class RotationRing(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
 
@@ -22,7 +26,20 @@ class RotationRing(context: Context, attrs: AttributeSet?) : FrameLayout(context
         setWillNotDraw(false)
         LayoutInflater.from(context).inflate(R.layout.view_rotation_ring, this, true)
         degree.text = "0°"
+        val rotationView = button.parent as View
+        val gesture = RevolutionGesture()
+        gesture.onDegreeChangedListener = { d ->
+            degree.text = "${d.toInt()}°"
+            rotationView.rotation = d
+            onDegreeChangedListener?.invoke(d)
+        }
+        button.setOnTouchListener { _, event ->
+            gesture.handleTouchEvent(event)
+            true
+        }
     }
+
+    var onDegreeChangedListener: ((Float) -> Unit)? = null
 
 
     private val buttonRadius = dp2px(10).toFloat()
