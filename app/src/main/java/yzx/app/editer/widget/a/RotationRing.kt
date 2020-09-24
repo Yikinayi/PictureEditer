@@ -33,9 +33,14 @@ class RotationRing(context: Context, attrs: AttributeSet?) : FrameLayout(context
             rotationView.rotation = d
             onDegreeChangedListener?.invoke(d)
         }
-        button.setOnTouchListener { _, event ->
-            gesture.handleTouchEvent(event)
-            true
+        rotationView.post {
+            val xy = IntArray(2)
+            rotationView.getLocationOnScreen(xy)
+            val point = PointF(xy[0].toFloat() + rotationView.width / 2f, xy[1].toFloat() + rotationView.height / 2f)
+            button.setOnTouchListener { _, event ->
+                gesture.handleTouchEvent(point, event)
+                true
+            }
         }
     }
 
