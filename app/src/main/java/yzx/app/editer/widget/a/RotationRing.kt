@@ -51,7 +51,7 @@ class RotationRing(context: Context, attrs: AttributeSet?) : FrameLayout(context
     var onDegreeChangedListener: ((Float) -> Unit)? = null
 
 
-    private val buttonRadius = dp2px(10).toFloat()
+    private val buttonRadius = dp2px(15).toFloat()
     private val ringLen = dp2px(4).toFloat()
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {

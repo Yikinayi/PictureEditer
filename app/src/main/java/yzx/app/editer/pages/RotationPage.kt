@@ -85,8 +85,9 @@ class RotationPage : AppCompatActivity() {
 
         degreeText.text = "0°"
         ring.onDegreeChangedListener = {
-            degreeText.text = "${it.toInt()}°"
-            image.rotation = it
+            val dInt = it.toInt()
+            degreeText.text = "${dInt}°"
+            image.rotation = dInt.toFloat()
         }
     }
 
