@@ -22,14 +22,18 @@ import kotlin.math.min
 class RotationRing(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
 
+    fun given(d: Float) {
+        (button.parent as? View)?.rotation = d
+        onDegreeChangedListener?.invoke(d)
+    }
+
+
     init {
         setWillNotDraw(false)
         LayoutInflater.from(context).inflate(R.layout.view_rotation_ring, this, true)
-        degree.text = "0°"
         val rotationView = button.parent as View
         val gesture = RevolutionGesture()
         gesture.onDegreeChangedListener = { d ->
-            degree.text = "${d.toInt()}°"
             rotationView.rotation = d
             onDegreeChangedListener?.invoke(d)
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,11 +44,37 @@
     </FrameLayout>
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前旋转:  "
+            android:textColor="#ffffff"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/degreeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="24dp"
+            tools:text="0°" />
+
+    </LinearLayout>
+
     <FrameLayout
-        android:id="@+id/imageContainer"
+        android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="350dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp">
 
         <ImageView
             android:id="@+id/image"
@@ -55,14 +82,15 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:scaleType="fitXY" />
-    </FrameLayout>
 
-    <yzx.app.editer.widget.a.RotationRing
-        android:id="@+id/ring"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp" />
+
+        <yzx.app.editer.widget.a.RotationRing
+            android:id="@+id/ring"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
 
 
 </LinearLayout>

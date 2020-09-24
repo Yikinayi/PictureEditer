@@ -1,5 +1,6 @@
 package yzx.app.editer.pages
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -12,6 +13,7 @@ import yzx.app.editer.R
 import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
+import yzx.app.editer.util.dp2px
 import yzx.app.editer.widget.toast.toast
 import kotlin.math.sqrt
 
@@ -54,6 +56,7 @@ class RotationPage : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun start() {
         val bitmap = bitmap!!
         setContentView(R.layout.page_rotation)
@@ -66,20 +69,25 @@ class RotationPage : AppCompatActivity() {
             }
         }
 
-        val len = resources.displayMetrics.widthPixels
-        imageContainer.layoutParams.width = len
-        imageContainer.layoutParams.height = len
-        imageContainer.requestLayout()
+        val len = resources.displayMetrics.widthPixels - dp2px(40)
+        topLayout.layoutParams.width = len
+        topLayout.layoutParams.height = len
+        topLayout.requestLayout()
 
+        val len2 = len - dp2px(50)
         val scale = bitmap.width.toFloat() / bitmap.height
-        val shouldWidth = sqrt((len * len) / (1 + (1 / (scale * scale))))
+        val shouldWidth = sqrt((len2 * len2) / (1 + (1 / (scale * scale))))
         val shouldHeight = shouldWidth / scale
         image.layoutParams.width = shouldWidth.toInt()
         image.layoutParams.height = shouldHeight.toInt()
         image.requestLayout()
         image.setImageBitmap(bitmap)
 
-        ring.onDegreeChangedListener = { image.rotation = it }
+        degreeText.text = "0°"
+        ring.onDegreeChangedListener = {
+            degreeText.text = "${it.toInt()}°"
+            image.rotation = it
+        }
     }
 
 
