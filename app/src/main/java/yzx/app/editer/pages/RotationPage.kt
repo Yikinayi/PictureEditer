@@ -1,11 +1,15 @@
 package yzx.app.editer.pages
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.page_rotation.*
@@ -89,12 +93,30 @@ class RotationPage : AppCompatActivity() {
             degreeText.text = "${dInt}°"
             image.rotation = dInt.toFloat()
         }
+
+        target90.setOnClickListener { animToDegree(90f) }
+        target180.setOnClickListener { animToDegree(180f) }
+        target270.setOnClickListener { animToDegree(270f) }
+    }
+
+    private var anim: ValueAnimator? = null
+
+    private fun animToDegree(d: Float) {
+        if (ring.current == d) return
+        anim?.cancel()
+        anim = ValueAnimator.ofFloat(ring.current, d).apply {
+            addUpdateListener { ring?.given(it.animatedValue as Float) }
+            interpolator = DecelerateInterpolator(1.3f)
+            duration = 500
+            start()
+        }
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
         bitmap?.recycle()
+        anim?.cancel()
     }
 
 }

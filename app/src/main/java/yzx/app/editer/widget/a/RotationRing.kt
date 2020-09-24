@@ -23,10 +23,13 @@ class RotationRing(context: Context, attrs: AttributeSet?) : FrameLayout(context
 
 
     fun given(d: Float) {
+        current = d
         (button.parent as? View)?.rotation = d
         onDegreeChangedListener?.invoke(d)
     }
 
+    var current: Float = 0f
+        private set
 
     init {
         setWillNotDraw(false)
@@ -34,6 +37,7 @@ class RotationRing(context: Context, attrs: AttributeSet?) : FrameLayout(context
         val rotationView = button.parent as View
         val gesture = RevolutionGesture()
         gesture.onDegreeChangedListener = { d ->
+            current = d
             rotationView.rotation = d
             onDegreeChangedListener?.invoke(d)
         }
