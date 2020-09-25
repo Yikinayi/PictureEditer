@@ -143,13 +143,15 @@ class RotationPage : AppCompatActivity() {
             } else {
                 Storage.cacheAsync(bmp,
                     {
-                        runMinimumInterval(start, 1400) {
+                        runMinimumInterval(start, 1300) {
                             dismissLoading()
+                            bmp.recycle()
                             toast("已保存")
                         }
                     }, {
                         runMinimumInterval(start, 1200) {
                             dismissLoading()
+                            bmp.recycle()
                             toast("操作失败, 可能是存储空间不足")
                         }
                     })
@@ -160,7 +162,35 @@ class RotationPage : AppCompatActivity() {
     private fun startSave() {
         showLoading()
         val start = SystemClock.uptimeMillis()
-        
+        GlobalScope.launch(Dispatchers.Main) {
+            val bmp = withContext(Dispatchers.Default) {
+                var result: Bitmap? = null
+                kotlin.runCatching { result = BitmapAlmighty.makeRotatingBitmap(bitmap!!, ring.current.toInt().toFloat()) }
+                result
+            }
+            if (bmp == null) {
+                runMinimumInterval(start, 1200) {
+                    dismissLoading()
+                    toast("操作失败, 可能是内存不够了")
+                }
+            } else {
+                Storage.saveAsyncWithPermission(this@RotationPage, bmp,
+                    {
+                        runMinimumInterval(start, 1300) {
+                            dismissLoading()
+                            bmp.recycle()
+                            toast("已保存到手机相册")
+                        }
+                    },
+                    {
+                        runMinimumInterval(start, 1200) {
+                            dismissLoading()
+                            bmp.recycle()
+                            toast("操作失败, 可能是存储空间不足")
+                        }
+                    })
+            }
+        }
     }
 
 
