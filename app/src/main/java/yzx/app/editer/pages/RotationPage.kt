@@ -6,28 +6,20 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.View
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.page_rotation.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import yzx.app.editer.R
-import yzx.app.editer.dta.Storage
 import yzx.app.editer.pages.ability.ColorPicker
+import yzx.app.editer.pages.ability.ImageProcessCallback
+import yzx.app.editer.pages.ability.startImageCacheProcess
+import yzx.app.editer.pages.ability.startImageSaveProcess
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dialog.SimpleConfirmAlert
-import yzx.app.editer.util.dialog.dismissLoading
-import yzx.app.editer.util.dialog.showLoading
 import yzx.app.editer.util.dp2px
-import yzx.app.editer.util.tools.runMinimumInterval
 import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 import yzx.app.editer.widget.toast.toast
 import kotlin.math.sqrt
@@ -127,70 +119,23 @@ class RotationPage : AppCompatActivity() {
     }
 
     private fun startCache() {
-        showLoading()
-        val start = SystemClock.uptimeMillis()
-        GlobalScope.launch(Dispatchers.Main) {
-            val bmp = withContext(Dispatchers.Default) {
-                var result: Bitmap? = null
-                kotlin.runCatching { result = BitmapAlmighty.makeRotatingBitmap(bitmap!!, ring.current.toInt().toFloat()) }
-                result
+        startImageCacheProcess(this, object : ImageProcessCallback {
+            override fun onComplete(result: Boolean) = Unit
+            override fun getBitmap(): Bitmap? {
+                kotlin.runCatching { return BitmapAlmighty.makeRotatingBitmap(bitmap!!, ring.current.toInt().toFloat()) }
+                return null
             }
-            if (bmp == null) {
-                runMinimumInterval(start, 1200) {
-                    dismissLoading()
-                    toast("操作失败, 可能是内存不够了")
-                }
-            } else {
-                Storage.cacheAsync(bmp,
-                    {
-                        runMinimumInterval(start, 1300) {
-                            dismissLoading()
-                            bmp.recycle()
-                            toast("已保存")
-                        }
-                    }, {
-                        runMinimumInterval(start, 1200) {
-                            dismissLoading()
-                            bmp.recycle()
-                            toast("操作失败, 可能是存储空间不足")
-                        }
-                    })
-            }
-        }
+        })
     }
 
     private fun startSave() {
-        showLoading()
-        val start = SystemClock.uptimeMillis()
-        GlobalScope.launch(Dispatchers.Main) {
-            val bmp = withContext(Dispatchers.Default) {
-                var result: Bitmap? = null
-                kotlin.runCatching { result = BitmapAlmighty.makeRotatingBitmap(bitmap!!, ring.current.toInt().toFloat()) }
-                result
+        startImageSaveProcess(this, object : ImageProcessCallback {
+            override fun onComplete(result: Boolean) = Unit
+            override fun getBitmap(): Bitmap? {
+                kotlin.runCatching { return BitmapAlmighty.makeRotatingBitmap(bitmap!!, ring.current.toInt().toFloat()) }
+                return null
             }
-            if (bmp == null) {
-                runMinimumInterval(start, 1200) {
-                    dismissLoading()
-                    toast("操作失败, 可能是内存不够了")
-                }
-            } else {
-                Storage.saveAsyncWithPermission(this@RotationPage, bmp,
-                    {
-                        runMinimumInterval(start, 1300) {
-                            dismissLoading()
-                            bmp.recycle()
-                            toast("已保存到手机相册")
-                        }
-                    },
-                    {
-                        runMinimumInterval(start, 1200) {
-                            dismissLoading()
-                            bmp.recycle()
-                            toast("操作失败, 可能是存储空间不足")
-                        }
-                    })
-            }
-        }
+        })
     }
 
 

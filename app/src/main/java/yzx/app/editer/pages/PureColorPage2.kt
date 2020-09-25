@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
@@ -29,6 +30,9 @@ import yzx.app.editer.R
 import yzx.app.editer.dta.PureColorShape
 import yzx.app.editer.dta.Storage
 import yzx.app.editer.pages.ability.ColorPicker
+import yzx.app.editer.pages.ability.ImageProcessCallback
+import yzx.app.editer.pages.ability.startImageCacheProcess
+import yzx.app.editer.pages.ability.startImageSaveProcess
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dialog.dismissLoading
@@ -83,32 +87,10 @@ class PureColorPage2 : AppCompatActivity() {
             }
         })
         confirm.setOnClickListenerPreventFast {
-            showLoading()
-            val startTime = SystemClock.uptimeMillis()
-            BitmapAlmighty.makePureColorAsync(getShape(), getColor(), getWidth(), getHeight(),
-                success = { bitmap ->
-                    Storage.saveAsyncWithPermission(this, bitmap,
-                        success = {
-                            runMinimumInterval(startTime, 1400) {
-                                dismissLoading()
-                                bitmap.recycle()
-                                toast("OK, 图片已保存到系统相册")
-                            }
-                        },
-                        failed = {
-                            runMinimumInterval(startTime, 1200) {
-                                dismissLoading()
-                                bitmap.recycle()
-                                longToast("操作失败, 可能是手机空间不足或没有权限")
-                            }
-                        })
-                },
-                failed = {
-                    runMinimumInterval(startTime, 1200) {
-                        dismissLoading()
-                        toast("操作失败, 可能是内存不足")
-                    }
-                })
+            startImageSaveProcess(this, object : ImageProcessCallback {
+                override fun onComplete(result: Boolean) = Unit
+                override fun getBitmap(): Bitmap? = BitmapAlmighty.makePureColor(getShape(), getColor(), getWidth(), getHeight())
+            })
         }
     }
 
@@ -356,34 +338,16 @@ class PureColorPage2 : AppCompatActivity() {
         }
 
         private fun startCache(w: Int, h: Int, color: Int, shape: PureColorShape) {
-            activity?.showLoading()
-            val startTime = SystemClock.uptimeMillis()
-            BitmapAlmighty.makePureColorAsync(shape, color, w, h,
-                success = { bmp ->
-                    Storage.cacheAsync(bmp,
-                        success = {
-                            runMinimumInterval(startTime, 1400) {
-                                activity?.dismissLoading()
-                                bmp.recycle()
-                                cachedLayout.isVisible = true
-                                noCacheLayout.isVisible = false
-                                cachedInfo.add("${w}${h}${color}${shape}")
-                            }
-                        },
-                        failed = {
-                            runMinimumInterval(startTime, 1200) {
-                                activity?.dismissLoading()
-                                bmp.recycle()
-                                toast("操作失败, 可能是手机存储空间不足")
-                            }
-                        })
-                },
-                failed = {
-                    runMinimumInterval(startTime, 1200) {
-                        activity?.dismissLoading()
-                        toast("操作失败, 估计是内存不足")
+            startImageCacheProcess(activity, object : ImageProcessCallback {
+                override fun getBitmap(): Bitmap? = BitmapAlmighty.makePureColor(shape, color, w, h)
+                override fun onComplete(result: Boolean) {
+                    if (result) {
+                        cachedLayout.isVisible = true
+                        noCacheLayout.isVisible = false
+                        cachedInfo.add("${w}${h}${color}${shape}")
                     }
-                })
+                }
+            })
         }
 
         private val cachedInfo = ArrayList<String>()

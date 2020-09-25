@@ -11,6 +11,7 @@ import yzx.app.editer.dta.Storage
 import yzx.app.editer.util.dialog.dismissLoading
 import yzx.app.editer.util.dialog.showLoading
 import yzx.app.editer.util.tools.runMinimumInterval
+import yzx.app.editer.widget.toast.longToast
 import yzx.app.editer.widget.toast.toast
 
 
@@ -78,7 +79,7 @@ fun startImageSaveProcess(activity: Activity, callback: ImageProcessCallback) {
                     runMinimumInterval(start, 1200) {
                         activity.dismissLoading()
                         bmp.recycle()
-                        toast("操作失败, 可能是存储空间不足")
+                        longToast("操作失败, 可能是手机空间不足或没有权限")
                         callback.onComplete(false)
                     }
                 })
