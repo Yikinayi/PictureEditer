@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import yzx.app.editer.R
 
+
 class DialogInfo {
     lateinit var contentView: View
     var width: Int = -2
@@ -16,24 +17,27 @@ class DialogInfo {
     var cancelAble = true
     var cancelTouchOutside = false
     var gravity = Gravity.CENTER
-    var dim = true
     var dimAmount = 0.4f
 }
 
-fun Activity.showCommonDialog(info: DialogInfo): Dialog {
-    AlertDialog.Builder(this, if (info.dim) R.style.DialogDimEnable else R.style.DialogDimDisable)
-        .setCancelable(info.cancelAble).create().also { dialog ->
-            dialog.setCancelable(info.cancelAble)
-            dialog.setCanceledOnTouchOutside(info.cancelTouchOutside)
-            dialog.show()
-            dialog.window?.attributes?.width = info.width
-            dialog.window?.attributes?.height = info.height
-            dialog.window?.attributes = dialog.window?.attributes
-            if (info.dim)
-                dialog?.window?.attributes?.dimAmount = info.dimAmount
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.window?.setGravity(info.gravity)
-            dialog.setContentView(info.contentView)
-            return dialog
-        }
+
+fun Activity.showCommonDialog(info: DialogInfo): Dialog? {
+    if (this.isFinishing || this.isDestroyed) return null
+    kotlin.runCatching {
+        AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog).setCancelable(info.cancelAble)
+            .create().also { dialog ->
+                dialog.setCancelable(info.cancelAble)
+                dialog.setCanceledOnTouchOutside(info.cancelTouchOutside)
+                dialog.show()
+                dialog.window?.attributes?.width = info.width
+                dialog.window?.attributes?.height = info.height
+                dialog.window?.attributes?.dimAmount = info.dimAmount
+                dialog.window?.attributes = dialog.window?.attributes
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.window?.setGravity(info.gravity)
+                dialog.setContentView(info.contentView)
+                return dialog
+            }
+    }
+    return null
 }
