@@ -55,6 +55,9 @@
         <activity
             android:name=".pages.FlipPage"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.GifPage"
+            android:screenOrientation="portrait" />
 
     </application>
 

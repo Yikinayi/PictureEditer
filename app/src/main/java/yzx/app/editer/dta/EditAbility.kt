@@ -37,7 +37,7 @@ enum class EditAbility {
                     image = R.drawable.ic_main_edit_absorb
                 })
                 add(Gif.apply {
-                    nameText = "GIF图片单帧率截图"
+                    nameText = "GIF截图"
                     image = R.drawable.ic_main_edit_git
                 })
                 add(Pure.apply {

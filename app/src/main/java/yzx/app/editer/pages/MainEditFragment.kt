@@ -77,10 +77,11 @@ class MainEditFragment : Fragment() {
             EditAbility.Pure -> PureColorPage2.launch()
             EditAbility.Rotate -> getPicture { RotationPage.launch(it) }
             EditAbility.Flip -> getPicture { FlipPage.launch(it) }
+            EditAbility.Gif -> getPicture(false) { GifPage.launch(it) }
         }
     }
 
-    private fun getPicture(block: (String) -> Unit) {
+    private fun getPicture(limitWidthHeight: Boolean = true, block: (String) -> Unit) {
         val activity = activity ?: return
         PermissionRequester.request(activity, Manifest.permission.READ_EXTERNAL_STORAGE) { result ->
             if (result) {
@@ -92,7 +93,10 @@ class MainEditFragment : Fragment() {
                         if (width <= 0 || height <= 0) {
                             toast("图片有问题,请重选")
                         } else if (width < AppConfig.minEditSupportImageSize || height < AppConfig.minEditSupportImageSize) {
-                            toast("图片太小啦")
+                            if (limitWidthHeight)
+                                toast("图片太小啦")
+                            else
+                                block.invoke(path)
                         } else
                             block.invoke(path)
                     }
