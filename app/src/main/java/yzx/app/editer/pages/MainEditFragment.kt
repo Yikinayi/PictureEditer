@@ -76,7 +76,7 @@ class MainEditFragment : Fragment() {
         when (data) {
             EditAbility.Pure -> PureColorPage2.launch()
             EditAbility.Rotate -> getPicture { RotationPage.launch(it) }
-
+            EditAbility.Flip -> getPicture { FlipPage.launch(it) }
         }
     }
 

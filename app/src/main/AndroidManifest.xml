@@ -52,6 +52,9 @@
         <activity
             android:name=".pages.RotationPage"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.FlipPage"
+            android:screenOrientation="portrait" />
 
     </application>
 
