@@ -15,8 +15,12 @@ import kotlinx.android.synthetic.main.page_flip.*
 import kotlinx.android.synthetic.main.page_flip.confirm
 import yzx.app.editer.R
 import yzx.app.editer.pages.ability.ColorPicker
+import yzx.app.editer.pages.ability.ImageProcessCallback
+import yzx.app.editer.pages.ability.startImageCacheProcess
+import yzx.app.editer.pages.ability.startImageSaveProcess
 import yzx.app.editer.util.U
 import yzx.app.editer.util.bmp.BitmapAlmighty
+import yzx.app.editer.util.dialog.SimpleConfirmAlert
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 import yzx.app.editer.widget.toast.toast
@@ -92,14 +96,30 @@ class FlipPage : AppCompatActivity() {
 
         cacheButton.setOnClickListenerPreventFast {
             if (currentFlip != flipNone) {
-
+                SimpleConfirmAlert.showByCache(this) {
+                    startImageCacheProcess(this, object : ImageProcessCallback {
+                        override fun onComplete(result: Boolean) = Unit
+                        override fun getBitmap(): Bitmap? = when (currentFlip) {
+                            flipUp -> BitmapAlmighty.makeFlipTopBottomBitmap(bitmap)
+                            flipLeft -> BitmapAlmighty.makeFlipLeftRightBitmap(bitmap)
+                            else -> null
+                        }
+                    })
+                }
             } else {
                 toast("图片没改动")
             }
         }
         confirm.setOnClickListenerPreventFast {
             if (currentFlip != flipNone) {
-
+                startImageSaveProcess(this, object : ImageProcessCallback {
+                    override fun onComplete(result: Boolean) = Unit
+                    override fun getBitmap(): Bitmap? = when (currentFlip) {
+                        flipUp -> BitmapAlmighty.makeFlipTopBottomBitmap(bitmap)
+                        flipLeft -> BitmapAlmighty.makeFlipLeftRightBitmap(bitmap)
+                        else -> null
+                    }
+                })
             } else {
                 toast("图片没改动")
             }

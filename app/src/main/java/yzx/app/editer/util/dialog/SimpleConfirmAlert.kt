@@ -28,4 +28,9 @@ object SimpleConfirmAlert {
         }
     }
 
+
+    fun showByCache(act: Activity, confirm: () -> Unit) {
+        SimpleConfirmAlert.show(act, "将结果保存到图片临时区?", "取消", "确定", confirm)
+    }
+
 }

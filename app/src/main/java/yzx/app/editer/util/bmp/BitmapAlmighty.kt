@@ -2,6 +2,8 @@ package yzx.app.editer.util.bmp
 
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.graphics.drawable.DrawableCompat
 import com.bumptech.glide.Glide
@@ -173,6 +175,39 @@ object BitmapAlmighty {
         val canvas = Canvas(result)
         canvas.rotate(degree, result.width / 2f, result.height / 2f)
         canvas.drawBitmap(source, (result.width - source.width) / 2f, (result.height - source.height) / 2f, Paint(Paint.ANTI_ALIAS_FLAG))
+        return result
+    }
+
+
+    fun makeFlipLeftRightBitmap(source: Bitmap): Bitmap {
+        val iv = ImageView(U.app)
+        iv.setImageBitmap(source)
+        iv.layout(0, 0, source.width, source.height)
+        iv.measure(
+            View.MeasureSpec.makeMeasureSpec(source.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(source.height, View.MeasureSpec.EXACTLY)
+        )
+        iv.rotationY = 180f
+        val container = FrameLayout(U.app)
+        container.addView(iv, FrameLayout.LayoutParams(source.width, source.height))
+        val result = Bitmap.createBitmap(source.width, source.height, Bitmap.Config.ARGB_8888)
+        container.draw(Canvas(result))
+        return result
+    }
+
+    fun makeFlipTopBottomBitmap(source: Bitmap): Bitmap {
+        val iv = ImageView(U.app)
+        iv.setImageBitmap(source)
+        iv.layout(0, 0, source.width, source.height)
+        iv.measure(
+            View.MeasureSpec.makeMeasureSpec(source.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(source.height, View.MeasureSpec.EXACTLY)
+        )
+        iv.rotationX = 180f
+        val container = FrameLayout(U.app)
+        container.addView(iv, FrameLayout.LayoutParams(source.width, source.height))
+        val result = Bitmap.createBitmap(source.width, source.height, Bitmap.Config.ARGB_8888)
+        container.draw(Canvas(result))
         return result
     }
 
