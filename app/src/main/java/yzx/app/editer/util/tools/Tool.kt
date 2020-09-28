@@ -46,3 +46,22 @@ fun runMinimumInterval(start: Long, interval: Long, block: () -> Unit) {
         block.invoke()
     }
 }
+
+
+fun Any.reflectDeclaredField(name: String): Any? {
+    kotlin.runCatching {
+        val f = this::class.java.getDeclaredField(name)
+        f.isAccessible = true
+        return f.get(this)
+    }
+    return null
+}
+
+
+fun Any.reflectSetDeclaredField(name: String, value: Any?) {
+    kotlin.runCatching {
+        val f = this::class.java.getDeclaredField(name)
+        f.isAccessible = true
+        f.set(this, value)
+    }
+}
