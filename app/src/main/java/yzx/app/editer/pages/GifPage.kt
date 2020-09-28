@@ -3,12 +3,11 @@ package yzx.app.editer.pages
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.BarUtils
@@ -18,8 +17,8 @@ import com.bumptech.glide.load.resource.gif.GifUtil
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.page_gif.*
-import kotlinx.android.synthetic.main.page_gif.image
 import yzx.app.editer.R
+import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.pages.ability.ImageProcessCallback
 import yzx.app.editer.pages.ability.startImageSaveProcess
 import yzx.app.editer.util.U
@@ -78,6 +77,13 @@ class GifPage : AppCompatActivity() {
         loadingLayout.isVisible = true
         dataLayout.isVisible = false
         loadingImage.setImageDrawable(drawable)
+
+        bgButton.setOnClickListener {
+            ColorPicker.start {
+                findViewById<View>(R.id.container).setBackgroundColor(it)
+                window.statusBarColor = it
+            }
+        }
 
         val imageLen = resources.displayMetrics.widthPixels - dp2px(40)
         image.layoutParams.width = imageLen
