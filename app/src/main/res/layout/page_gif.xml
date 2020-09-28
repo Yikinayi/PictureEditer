@@ -47,7 +47,8 @@
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -71,6 +72,16 @@
                 android:textSize="13dp"
                 android:textStyle="italic" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:alpha="0.8"
+                android:text="有的GIF比较大, 请耐心等待~"
+                android:textColor="#ffffff"
+                android:textSize="11dp"
+                android:textStyle="italic" />
         </LinearLayout>
 
     </FrameLayout>
@@ -82,7 +93,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:id="@+id/image"
