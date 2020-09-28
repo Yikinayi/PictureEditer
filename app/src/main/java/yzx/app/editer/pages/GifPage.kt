@@ -17,10 +17,11 @@ import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.load.resource.gif.GifUtil
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import kotlinx.android.synthetic.main.page_flip.*
 import kotlinx.android.synthetic.main.page_gif.*
 import kotlinx.android.synthetic.main.page_gif.image
 import yzx.app.editer.R
+import yzx.app.editer.pages.ability.ImageProcessCallback
+import yzx.app.editer.pages.ability.startImageSaveProcess
 import yzx.app.editer.util.U
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.tools.runMinimumInterval
@@ -115,6 +116,13 @@ class GifPage : AppCompatActivity() {
             currentIndex++
             if (currentIndex >= frames.size) currentIndex = 0
             setTargetFrameUI(currentIndex, frames)
+        }
+        confirm.setOnClickListener {
+            startImageSaveProcess(this, object : ImageProcessCallback {
+                override fun getBitmap(): Bitmap? = frames[currentIndex]
+                override fun onComplete(result: Boolean) = Unit
+                override fun recycleBitmap(): Boolean = false
+            })
         }
     }
 

@@ -18,6 +18,7 @@ import yzx.app.editer.widget.toast.toast
 interface ImageProcessCallback {
     fun getBitmap(): Bitmap?
     fun onComplete(result: Boolean)
+    fun recycleBitmap() = true
 }
 
 
@@ -37,14 +38,16 @@ fun startImageCacheProcess(activity: Activity?, callback: ImageProcessCallback) 
                 {
                     runMinimumInterval(start, 1300) {
                         activity?.dismissLoading()
-                        bmp.recycle()
+                        if (callback.recycleBitmap())
+                            bmp.recycle()
                         toast("已保存")
                         callback.onComplete(true)
                     }
                 }, {
                     runMinimumInterval(start, 1200) {
                         activity?.dismissLoading()
-                        bmp.recycle()
+                        if (callback.recycleBitmap())
+                            bmp.recycle()
                         toast("操作失败, 可能是存储空间不足")
                         callback.onComplete(false)
                     }
@@ -70,7 +73,8 @@ fun startImageSaveProcess(activity: Activity, callback: ImageProcessCallback) {
                 {
                     runMinimumInterval(start, 1300) {
                         activity.dismissLoading()
-                        bmp.recycle()
+                        if (callback.recycleBitmap())
+                            bmp.recycle()
                         toast("已保存到手机相册")
                         callback.onComplete(true)
                     }
@@ -78,7 +82,8 @@ fun startImageSaveProcess(activity: Activity, callback: ImageProcessCallback) {
                 {
                     runMinimumInterval(start, 1200) {
                         activity.dismissLoading()
-                        bmp.recycle()
+                        if (callback.recycleBitmap())
+                            bmp.recycle()
                         longToast("操作失败, 可能是手机空间不足或没有权限")
                         callback.onComplete(false)
                     }
