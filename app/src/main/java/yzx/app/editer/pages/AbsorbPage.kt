@@ -100,7 +100,35 @@ class AbsorbPage : AppCompatActivity() {
     }
 
     private fun setTouchLayout(bitmap: Bitmap) {
+        (image.parent as View).let { parent ->
+            parent.post {
+                image.setImageBitmap(bitmap)
+                val shouldWidth: Int
+                val shouldHeight: Int
+                if (bitmap.width > bitmap.height) {
+                    if (bitmap.height / bitmap.width.toFloat() > parent.height / parent.width.toFloat()) {
+                        shouldHeight = parent.height
+                        shouldWidth = bitmap.width * shouldHeight / bitmap.height
+                    } else {
+                        shouldWidth = resources.displayMetrics.widthPixels - dp2px(20 * 2)
+                        shouldHeight = bitmap.height * shouldWidth / bitmap.width
+                    }
+                } else {
+                    if (bitmap.width / bitmap.height.toFloat() > parent.width / parent.height.toFloat()) {
+                        shouldWidth = resources.displayMetrics.widthPixels - dp2px(20 * 2)
+                        shouldHeight = bitmap.height * shouldWidth / bitmap.width
+                    } else {
+                        shouldHeight = parent.height
+                        shouldWidth = bitmap.width * shouldHeight / bitmap.height
+                    }
+                }
+                image.layoutParams.width = shouldWidth
+                image.layoutParams.height = shouldHeight
+                image.requestLayout()
 
+
+            }
+        }
     }
 
     override fun onDestroy() {
