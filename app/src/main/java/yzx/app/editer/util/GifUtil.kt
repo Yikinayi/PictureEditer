@@ -9,12 +9,26 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import yzx.app.editer.util.tools.reflectDeclaredField
+import yzx.app.editer.util.tools.reflectSetDeclaredField
 
 object GifUtil {
 
     class CancelTag {
         @Volatile
         var running: Boolean = true
+    }
+
+    fun setFrameDelay(delay: Int, drawable: GifDrawable) {
+        kotlin.runCatching {
+            val gifState = drawable.reflectDeclaredField("state")
+            val frameLoader = gifState?.reflectDeclaredField("frameLoader")
+            val gifDecoder = frameLoader?.reflectDeclaredField("gifDecoder")
+            val header = gifDecoder?.reflectDeclaredField("header")
+            val frames = header?.reflectDeclaredField("frames") as? ArrayList<*>
+            frames?.forEach {
+                it.reflectSetDeclaredField("delay", delay)
+            }
+        }
     }
 
     @SuppressLint("VisibleForTests")

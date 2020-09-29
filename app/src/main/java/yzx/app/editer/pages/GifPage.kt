@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.BarUtils
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.load.resource.gif.GifUtil
 import com.bumptech.glide.request.target.SimpleTarget
@@ -49,25 +50,27 @@ class GifPage : AppCompatActivity() {
         }
         savedInstanceState?.clear()
 
-        Glide.with(this).asGif().load(path).into(object : SimpleTarget<GifDrawable>() {
-            override fun onResourceReady(resource: GifDrawable, transition: Transition<in GifDrawable>?) {
-                if (resource.frameCount <= 0) {
-                    finish()
-                    toast("图片有问题, 请重试")
-                } else {
-                    this@GifPage.drawable = resource
-                    start()
+        Glide.with(this).asGif().load(path).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(object : SimpleTarget<GifDrawable>() {
+                override fun onResourceReady(resource: GifDrawable, transition: Transition<in GifDrawable>?) {
+                    if (resource.frameCount <= 0) {
+                        finish()
+                        toast("图片有问题, 请重试")
+                    } else {
+                        this@GifPage.drawable = resource
+                        start()
+                    }
                 }
-            }
 
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                toast("图片有误 , 得选择GIF格式")
-                finish()
-            }
-        })
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    toast("图片有误 , 得选择GIF格式")
+                    finish()
+                }
+            })
     }
 
     private val loadingCancelTag = GifUtil.CancelTag()
+    private var allFrames: HashMap<Int, Bitmap>? = null
 
     private fun start() {
         BarUtils.setStatusBarLightMode(window, false)
@@ -91,7 +94,9 @@ class GifPage : AppCompatActivity() {
         image.requestLayout()
 
         val start = SystemClock.uptimeMillis()
+        GifUtil.setFrameDelay(10, drawable)
         GifUtil.loadAllFrame(drawable, loadingCancelTag) { frames ->
+            allFrames = frames
             runMinimumInterval(start, 2000) {
                 drawable.stop()
                 loadingLayout.isVisible = false
@@ -133,15 +138,11 @@ class GifPage : AppCompatActivity() {
     }
 
 
-    override fun onBackPressed() {
-        loadingCancelTag.running = false
-        drawable?.stop()
-        super.onBackPressed()
-    }
-
     override fun onDestroy() {
         loadingCancelTag.running = false
         drawable?.stop()
+        allFrames?.values?.forEach { it.recycle() }
+        allFrames?.clear()
         super.onDestroy()
     }
 

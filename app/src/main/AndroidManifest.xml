@@ -58,6 +58,9 @@
         <activity
             android:name=".pages.GifPage"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.AbsorbPage"
+            android:screenOrientation="portrait" />
 
     </application>
 
