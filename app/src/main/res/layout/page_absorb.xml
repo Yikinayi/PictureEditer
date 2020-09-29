@@ -73,6 +73,15 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="选择区域:   "
+            android:textColor="#fff"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
         <FrameLayout
             android:layout_width="60dp"
             android:layout_height="60dp">
@@ -96,11 +105,20 @@
 
         </FrameLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:text="颜色示例:   "
+            android:textColor="#fff"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
         <yzx.app.editer.widget.ColorCircle
             android:id="@+id/colorCircle"
             android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="30dp" />
+            android:layout_height="60dp" />
 
     </LinearLayout>
 

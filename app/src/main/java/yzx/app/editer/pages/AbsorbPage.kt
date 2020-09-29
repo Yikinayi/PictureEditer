@@ -95,8 +95,8 @@ class AbsorbPage : AppCompatActivity() {
         val xp = min((bitmap.width * xPoi + 0.5f).toInt(), bitmap.width - 1)
         val yp = min((bitmap.height * yPoi + 0.5f).toInt(), bitmap.height - 1)
         val p = bitmap.getPixel(xp, yp)
-        colorText1.text = "当前颜色 : #${p.toHexColorString()}"
-        colorText2.text = "ARGB : ${Color.alpha(p)},${Color.red(p)},${Color.green(p)},${Color.blue(p)}"
+        colorText1.text = "当前颜色 :   #${p.toHexColorString()}"
+        colorText2.text = "ARGB :   ${Color.alpha(p)},${Color.red(p)},${Color.green(p)},${Color.blue(p)}"
     }
 
     private fun setTouchLayout(bitmap: Bitmap) {
