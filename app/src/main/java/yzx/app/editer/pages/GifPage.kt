@@ -74,9 +74,9 @@ class GifPage : AppCompatActivity() {
 
     private fun start() {
         BarUtils.setStatusBarLightMode(window, false)
-        window.statusBarColor = Color.BLACK
         val drawable = drawable!!
         setContentView(R.layout.page_gif)
+        window.statusBarColor = Color.parseColor(container.tag.toString())
         loadingLayout.isVisible = true
         dataLayout.isVisible = false
         loadingImage.setImageDrawable(drawable)

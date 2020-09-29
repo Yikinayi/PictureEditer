@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.BarUtils
-import kotlinx.android.synthetic.main.dialog_simple_confirm.*
 import kotlinx.android.synthetic.main.page_flip.*
 import kotlinx.android.synthetic.main.page_flip.confirm
 import yzx.app.editer.R
@@ -54,7 +53,6 @@ class FlipPage : AppCompatActivity() {
 
         savedInstanceState?.clear()
         BarUtils.setStatusBarLightMode(window, false)
-        window.statusBarColor = Color.BLACK
 
         BitmapAlmighty.getBitmapUnderMaxSupport(path,
             complete = {
@@ -71,6 +69,7 @@ class FlipPage : AppCompatActivity() {
     private fun start() {
         val bitmap = bitmap!!
         setContentView(R.layout.page_flip)
+        window.statusBarColor = Color.parseColor(container.tag.toString())
         back.setOnClickListener { finish() }
         bgButton.setOnClickListener {
             ColorPicker.start {
