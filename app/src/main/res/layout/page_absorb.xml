@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
@@ -48,6 +49,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/colorText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
@@ -55,6 +57,7 @@
             tools:text="当前颜色: #ABCDEF8A" />
 
         <TextView
+            android:id="@+id/colorText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
@@ -70,10 +73,28 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <yzx.app.editer.widget.a.ScaleCircle
-            android:id="@+id/scaleCircle"
+        <FrameLayout
             android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_height="60dp">
+
+            <yzx.app.editer.widget.a.ScaleCircle
+                android:id="@+id/scaleCircle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="#99ffffff" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="8dp"
+                android:layout_gravity="center"
+                android:background="#99ffffff" />
+
+        </FrameLayout>
 
         <yzx.app.editer.widget.ColorCircle
             android:id="@+id/colorCircle"

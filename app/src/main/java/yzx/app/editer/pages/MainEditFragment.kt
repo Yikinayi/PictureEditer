@@ -78,6 +78,7 @@ class MainEditFragment : Fragment() {
             EditAbility.Rotate -> getPicture { RotationPage.launch(it) }
             EditAbility.Flip -> getPicture { FlipPage.launch(it) }
             EditAbility.Gif -> getPicture(false) { GifPage.launch(it) }
+            EditAbility.Absorb -> getPicture { AbsorbPage.launch(it) }
         }
     }
 

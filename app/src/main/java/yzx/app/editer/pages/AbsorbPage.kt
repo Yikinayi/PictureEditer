@@ -1,12 +1,22 @@
 package yzx.app.editer.pages
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.BarUtils
+import kotlinx.android.synthetic.main.page_absorb.*
+import yzx.app.editer.R
+import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.util.U
+import yzx.app.editer.util.bmp.BitmapAlmighty
+import yzx.app.editer.util.dp2px
+import yzx.app.editer.util.toHexColorString
+import yzx.app.editer.widget.toast.toast
+import kotlin.math.min
 
 
 class AbsorbPage : AppCompatActivity() {
@@ -34,8 +44,69 @@ class AbsorbPage : AppCompatActivity() {
         BarUtils.setStatusBarLightMode(window, false)
         window.statusBarColor = Color.BLACK
 
+        BitmapAlmighty.getBitmapUnderMaxSupport(path,
+            complete = {
+                if (isFinishing) return@getBitmapUnderMaxSupport
+                this.bitmap = it; start()
+            },
+            error = {
+                if (isFinishing) return@getBitmapUnderMaxSupport
+                toast("图片有问题, 请重试")
+                finish()
+            })
+    }
+
+    private fun start() {
+        val bitmap = bitmap!!
+        setContentView(R.layout.page_absorb)
+        back.setOnClickListener { finish() }
+        bgButton.setOnClickListener {
+            ColorPicker.start {
+                findViewById<View>(R.id.container).setBackgroundColor(it)
+                window.statusBarColor = it
+            }
+        }
+        setScaleCircle(bitmap)
+        setColorCircle(.5f, .5f, bitmap)
+        setColorText(.5f, .5f, bitmap)
+        setTouchLayout(bitmap)
+    }
+
+    private fun setScaleCircle(bitmap: Bitmap) {
+        val minLen = dp2px(60 * 3)
+        var realBitmap = bitmap
+        if (bitmap.width + bitmap.height < minLen * 2) {
+            val scale = minLen / kotlin.math.min(bitmap.width, bitmap.height).toFloat()
+            realBitmap = Bitmap.createScaledBitmap(bitmap, (bitmap.width * scale + 0.5f).toInt(), (bitmap.height * scale + 0.5f).toInt(), false)
+        }
+        scaleCircle.setBitmap(realBitmap)
+        scaleCircle.setCenter(.5f, .5f)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setColorCircle(xPoi: Float, yPoi: Float, bitmap: Bitmap) {
+        val xp = min((bitmap.width * xPoi + 0.5f).toInt(), bitmap.width - 1)
+        val yp = min((bitmap.height * yPoi + 0.5f).toInt(), bitmap.height - 1)
+        colorCircle.color = bitmap.getPixel(xp, yp)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setColorText(xPoi: Float, yPoi: Float, bitmap: Bitmap) {
+        val xp = min((bitmap.width * xPoi + 0.5f).toInt(), bitmap.width - 1)
+        val yp = min((bitmap.height * yPoi + 0.5f).toInt(), bitmap.height - 1)
+        val p = bitmap.getPixel(xp, yp)
+        colorText1.text = "当前颜色 : #${p.toHexColorString()}"
+        colorText2.text = "ARGB : ${Color.alpha(p)},${Color.red(p)},${Color.green(p)},${Color.blue(p)}"
+    }
+
+    private fun setTouchLayout(bitmap: Bitmap) {
 
     }
 
+    override fun onDestroy() {
+        bitmap?.recycle()
+        scaleCircle?.bmp?.recycle()
+        super.onDestroy()
+    }
 
 }
