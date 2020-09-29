@@ -102,7 +102,6 @@ class AbsorbPage : AppCompatActivity() {
     private fun setTouchLayout(bitmap: Bitmap) {
         (image.parent as View).let { parent ->
             parent.post {
-                image.setImageBitmap(bitmap)
                 val shouldWidth: Int
                 val shouldHeight: Int
                 if (bitmap.width > bitmap.height) {
@@ -122,11 +121,19 @@ class AbsorbPage : AppCompatActivity() {
                         shouldWidth = bitmap.width * shouldHeight / bitmap.height
                     }
                 }
+                image.setImageBitmap(bitmap)
                 image.layoutParams.width = shouldWidth
                 image.layoutParams.height = shouldHeight
                 image.requestLayout()
-
-
+                touchLine.layoutParams.width = shouldWidth
+                touchLine.layoutParams.height = shouldHeight
+                touchLine.requestLayout()
+                touchLine.given(.5f, .5f)
+                touchLine.touchPercentCallback = { xPoi, yPoi ->
+                    setColorCircle(xPoi, yPoi, bitmap)
+                    setColorText(xPoi, yPoi, bitmap)
+                    scaleCircle.setCenter(xPoi, yPoi)
+                }
             }
         }
     }
