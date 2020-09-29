@@ -42,7 +42,6 @@ class AbsorbPage : AppCompatActivity() {
 
         savedInstanceState?.clear()
         BarUtils.setStatusBarLightMode(window, false)
-        window.statusBarColor = Color.BLACK
 
         BitmapAlmighty.getBitmapUnderMaxSupport(path,
             complete = {
@@ -59,6 +58,7 @@ class AbsorbPage : AppCompatActivity() {
     private fun start() {
         val bitmap = bitmap!!
         setContentView(R.layout.page_absorb)
+        window.statusBarColor = Color.parseColor(container.tag.toString())
         back.setOnClickListener { finish() }
         bgButton.setOnClickListener {
             ColorPicker.start {
