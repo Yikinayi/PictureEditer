@@ -79,6 +79,7 @@ class MainEditFragment : Fragment() {
             EditAbility.Flip -> getPicture { FlipPage.launch(it) }
             EditAbility.Gif -> getPicture(false) { GifPage.launch(it) }
             EditAbility.Absorb -> getPicture { AbsorbPage.launch(it) }
+            EditAbility.TextToImage -> TextToImagePage.launch()
         }
     }
 
