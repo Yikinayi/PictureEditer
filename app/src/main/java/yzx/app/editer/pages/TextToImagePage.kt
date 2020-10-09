@@ -65,6 +65,7 @@ class TextToImagePage : AppCompatActivity() {
     }
 
     private fun startSave() {
+        input.isCursorVisible = false
         input.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_LOW
         input.buildDrawingCache()
         val bmp = input.drawingCache
@@ -73,12 +74,14 @@ class TextToImagePage : AppCompatActivity() {
             override fun recycleBitmap(): Boolean = false
             override fun onComplete(result: Boolean) {
                 input?.destroyDrawingCache()
+                input.isCursorVisible = true
             }
         })
     }
 
     private fun startCache() {
         SimpleConfirmAlert.showByCache(this) {
+            input.isCursorVisible = false
             input.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_LOW
             input.buildDrawingCache()
             val bmp = input.drawingCache
@@ -87,6 +90,7 @@ class TextToImagePage : AppCompatActivity() {
                 override fun recycleBitmap(): Boolean = false
                 override fun onComplete(result: Boolean) {
                     input?.destroyDrawingCache()
+                    input.isCursorVisible = true
                 }
             })
         }
