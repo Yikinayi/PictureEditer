@@ -69,6 +69,22 @@
             android:src="@drawable/ic_clear"
             app:tint="#ffffff" />
 
+        <ImageView
+            android:id="@+id/cacheButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="13.5dp"
+            android:src="@drawable/ic_cache"
+            app:tint="#ffffff" />
+
+        <ImageView
+            android:id="@+id/saveButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="13.5dp"
+            android:src="@drawable/confirm_right"
+            app:tint="#ffffff" />
+
     </LinearLayout>
 
     <FrameLayout
