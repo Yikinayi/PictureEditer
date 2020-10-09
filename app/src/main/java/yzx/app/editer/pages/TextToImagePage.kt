@@ -78,16 +78,18 @@ class TextToImagePage : AppCompatActivity() {
     }
 
     private fun startCache() {
-        input.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_LOW
-        input.buildDrawingCache()
-        val bmp = input.drawingCache
-        startImageCacheProcess(this, object : ImageProcessCallback {
-            override fun getBitmap(): Bitmap? = bmp
-            override fun recycleBitmap(): Boolean = false
-            override fun onComplete(result: Boolean) {
-                input?.destroyDrawingCache()
-            }
-        })
+        SimpleConfirmAlert.showByCache(this) {
+            input.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_LOW
+            input.buildDrawingCache()
+            val bmp = input.drawingCache
+            startImageCacheProcess(this, object : ImageProcessCallback {
+                override fun getBitmap(): Bitmap? = bmp
+                override fun recycleBitmap(): Boolean = false
+                override fun onComplete(result: Boolean) {
+                    input?.destroyDrawingCache()
+                }
+            })
+        }
     }
 
 
