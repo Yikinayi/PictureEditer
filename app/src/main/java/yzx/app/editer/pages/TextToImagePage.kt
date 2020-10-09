@@ -45,9 +45,9 @@ class TextToImagePage : AppCompatActivity() {
 
         back.setOnClickListenerPreventFast { onBackPressed() }
         bgButton.setOnClickListenerPreventFast { ColorPicker.start { input.setBackgroundColor(it) } }
-        textColorButton.setOnClickListenerPreventFast { ColorPicker.start { input.setTextColor(it) } }
+        textColorButton.setOnClickListenerPreventFast { ColorPicker.start { onTextColorSelected(it) } }
         clearButton.setOnClickListenerPreventFast { if (input.text.isNotEmpty()) SimpleConfirmAlert.show(this, "清空?", "手误", "确定") { input.setText("") } }
-        textSizeButton.setOnClickListenerPreventFast { showSelectedSizeMenu { input.textSize = it.toFloat() } }
+        textSizeButton.setOnClickListenerPreventFast { showSelectedSizeMenu { onTextSizeSelected(it) } }
         saveButton.setOnClickListenerPreventFast {
             if (input.text.isEmpty()) {
                 toast("先输入内容再操作")
@@ -62,6 +62,14 @@ class TextToImagePage : AppCompatActivity() {
             }
             startCache()
         }
+    }
+
+    private fun onTextColorSelected(c: Int) {
+
+    }
+
+    private fun onTextSizeSelected(size: Int) {
+
     }
 
     private fun startSave() {
