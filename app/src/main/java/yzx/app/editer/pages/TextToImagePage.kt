@@ -11,8 +11,10 @@ import kotlinx.android.synthetic.main.page_text_to_image.*
 import yzx.app.editer.R
 import yzx.app.editer.pages.ability.ColorPicker
 import yzx.app.editer.util.U
+import yzx.app.editer.util.dialog.IntRangeSelectAlert
 import yzx.app.editer.util.dialog.SimpleConfirmAlert
 import yzx.app.editer.util.dp2px
+import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 
 
 class TextToImagePage : AppCompatActivity() {
@@ -36,13 +38,24 @@ class TextToImagePage : AppCompatActivity() {
             parent.post { input.maxHeight = parent.height }
         }
 
-        back.setOnClickListener { onBackPressed() }
-        bgButton.setOnClickListener { ColorPicker.start { input.setBackgroundColor(it) } }
-        textColorButton.setOnClickListener { ColorPicker.start { input.setTextColor(it) } }
-        clearButton.setOnClickListener { if (input.text.isNotEmpty()) SimpleConfirmAlert.show(this, "清空?", "手误", "确定") { input.setText("") } }
+        back.setOnClickListenerPreventFast { onBackPressed() }
+        bgButton.setOnClickListenerPreventFast { ColorPicker.start { input.setBackgroundColor(it) } }
+        textColorButton.setOnClickListenerPreventFast { ColorPicker.start { input.setTextColor(it) } }
+        clearButton.setOnClickListenerPreventFast { if (input.text.isNotEmpty()) SimpleConfirmAlert.show(this, "清空?", "手误", "确定") { input.setText("") } }
+        textSizeButton.setOnClickListenerPreventFast { showSelectedSizeMenu { input.textSize = it.toFloat() } }
 
     }
 
+    private var nowTextSize = 15
+
+    private fun showSelectedSizeMenu(onSelected: (Int) -> Unit) {
+        val min = 8
+        val max = 60
+        IntRangeSelectAlert.show(this, nowTextSize, min, max, "选择字体大小") {
+            nowTextSize = it
+            onSelected.invoke(it)
+        }
+    }
 
     override fun onBackPressed() {
         if (input.text.isEmpty()) {
