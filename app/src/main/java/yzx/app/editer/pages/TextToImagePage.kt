@@ -67,10 +67,11 @@ class TextToImagePage : AppCompatActivity() {
             showSelectedSizeMenu { onTextSizeSelected(it) }
         }
         imageBgButton.setOnClickListener {
-            SystemPhotograph.request(this) {
-                BitmapAlmighty.getBitmapUnderMaxSupport(it,
-                    { bmp -> input.background = BitmapDrawable(resources, bmp) },
-                    { toast("图片有问题, 请重试") })
+            SystemPhotograph.request(this) { path ->
+                if (!path.isBlank())
+                    BitmapAlmighty.getBitmapUnderMaxSupport(path,
+                        { bmp -> input.background = BitmapDrawable(resources, bmp) },
+                        { toast("图片有问题, 请重试") })
             }
         }
 
