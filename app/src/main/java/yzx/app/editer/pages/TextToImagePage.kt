@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
@@ -19,10 +20,12 @@ import yzx.app.editer.pages.ability.ImageProcessCallback
 import yzx.app.editer.pages.ability.startImageCacheProcess
 import yzx.app.editer.pages.ability.startImageSaveProcess
 import yzx.app.editer.util.U
+import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dialog.IntRangeSelectAlert
 import yzx.app.editer.util.dialog.SimpleConfirmAlert
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.px2dp
+import yzx.app.editer.util.sysResource.SystemPhotograph
 import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 import yzx.app.editer.widget.toast.toast
 import kotlin.math.max
@@ -46,15 +49,29 @@ class TextToImagePage : AppCompatActivity() {
         setContentView(R.layout.page_text_to_image)
         window.statusBarColor = Color.BLACK
 
-        (input.parent as View).let { parent ->
-            parent.post { input.maxHeight = parent.height }
+        back.setOnClickListenerPreventFast {
+            onBackPressed()
+        }
+        bgButton.setOnClickListenerPreventFast {
+            ColorPicker.start(title = "选择背景颜色") { input.setBackgroundColor(it) }
+        }
+        textColorButton.setOnClickListenerPreventFast {
+            ColorPicker.start(title = "选择文字颜色") { onTextColorSelected(it) }
+        }
+        clearButton.setOnClickListenerPreventFast {
+            if (input.text.isNotEmpty()) SimpleConfirmAlert.show(this, "清空?", "手误", "确定") { input.setText("") }
+        }
+        textSizeButton.setOnClickListenerPreventFast {
+            showSelectedSizeMenu { onTextSizeSelected(it) }
+        }
+        imageBgButton.setOnClickListener {
+            SystemPhotograph.request(this) {
+                BitmapAlmighty.getBitmapUnderMaxSupport(it,
+                    { bmp -> input.background = BitmapDrawable(resources, bmp) },
+                    { toast("图片有问题, 请重试") })
+            }
         }
 
-        back.setOnClickListenerPreventFast { onBackPressed() }
-        bgButton.setOnClickListenerPreventFast { ColorPicker.start { input.setBackgroundColor(it) } }
-        textColorButton.setOnClickListenerPreventFast { ColorPicker.start { onTextColorSelected(it) } }
-        clearButton.setOnClickListenerPreventFast { if (input.text.isNotEmpty()) SimpleConfirmAlert.show(this, "清空?", "手误", "确定") { input.setText("") } }
-        textSizeButton.setOnClickListenerPreventFast { showSelectedSizeMenu { onTextSizeSelected(it) } }
         saveButton.setOnClickListenerPreventFast {
             if (input.text.isEmpty()) {
                 toast("先输入内容再操作")
