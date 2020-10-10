@@ -1,5 +1,6 @@
 package yzx.app.editer.pages
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -26,6 +27,7 @@ import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dialog.IntRangeSelectAlert
 import yzx.app.editer.util.dialog.SimpleConfirmAlert
 import yzx.app.editer.util.dp2px
+import yzx.app.editer.util.permission.PermissionRequester
 import yzx.app.editer.util.px2dp
 import yzx.app.editer.util.sysResource.SystemPhotograph
 import yzx.app.editer.util.tools.setOnClickListenerPreventFast
@@ -67,12 +69,7 @@ class TextToImagePage : AppCompatActivity() {
             showSelectedSizeMenu { onTextSizeSelected(it) }
         }
         imageBgButton.setOnClickListener {
-            SystemPhotograph.request(this) { path ->
-                if (!path.isBlank())
-                    BitmapAlmighty.getBitmapUnderMaxSupport(path,
-                        { bmp -> input.background = BitmapDrawable(resources, bmp) },
-                        { toast("图片有问题, 请重试") })
-            }
+            requestImageBG()
         }
 
         saveButton.setOnClickListenerPreventFast {
@@ -91,6 +88,21 @@ class TextToImagePage : AppCompatActivity() {
         }
 
         dragLogic()
+    }
+
+    private fun requestImageBG() {
+        PermissionRequester.request(this, Manifest.permission.READ_EXTERNAL_STORAGE) { permissionResult ->
+            if (permissionResult) {
+                SystemPhotograph.request(this) { path ->
+                    if (!path.isBlank())
+                        BitmapAlmighty.getBitmapUnderMaxSupport(path,
+                            { bmp -> input.background = BitmapDrawable(resources, bmp) },
+                            { toast("图片有问题, 请重试") })
+                }
+            } else {
+                toast("没有权限啊~")
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
