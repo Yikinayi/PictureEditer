@@ -23,6 +23,7 @@
             android:src="@drawable/arrow_back" />
 
         <TextView
+            android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"

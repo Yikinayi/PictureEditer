@@ -1,6 +1,5 @@
 package yzx.app.editer.pages
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -22,6 +21,7 @@ class ColorPickerFragment : Fragment() {
     var initColor: Int = Color.HSVToColor(FloatArray(3).apply {
         set(0, 180f); set(1, 0.5f); set(2, 0.5f)
     })
+    var title: String = ""
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,6 +31,8 @@ class ColorPickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.window?.statusBarColor = Color.parseColor("#f5f5f5")
+        if (title.isNotBlank())
+            titleText.text = title
         acceptColor(initColor)
         panel.colorCallback = { byUser ->
             if (byUser) {
