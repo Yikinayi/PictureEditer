@@ -1,6 +1,7 @@
 package yzx.app.editer.pages
 
 import android.Manifest
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -63,7 +64,7 @@ class TextToImagePage : AppCompatActivity() {
             ColorPicker.start(title = "选择文字颜色") { onTextColorSelected(it) }
         }
         clearButton.setOnClickListenerPreventFast {
-            if (input.text.isNotEmpty()) SimpleConfirmAlert.show(this, "清空?", "手误", "确定") { input.setText("") }
+            SimpleConfirmAlert.show(this, "重置所有状态?", "手误", "确定") { reset() }
         }
         textSizeButton.setOnClickListenerPreventFast {
             showSelectedSizeMenu { onTextSizeSelected(it) }
@@ -90,6 +91,30 @@ class TextToImagePage : AppCompatActivity() {
         dragLogic()
     }
 
+    private fun reset() {
+        input.textSize = originInputTextSize
+        input.setTextColor(originInputTextColor)
+        input.setBackgroundColor(originInputBGColor)
+        input.setText("")
+        if (inputParent.layoutParams.width != maxInputWidth || inputParent.layoutParams.height != minInputLength) {
+            val startWidth = inputParent.layoutParams.width
+            val startHeight = inputParent.layoutParams.height
+            val toWidth = maxInputWidth
+            val toHeight = minInputLength
+            ValueAnimator.ofFloat(0f, 1f).setDuration(250).apply {
+                addUpdateListener {
+                    val p = it.animatedValue as Float
+                    val width = startWidth + p * (toWidth - startWidth)
+                    val height = toHeight + (1 - p) * (startHeight - toHeight)
+                    inputParent.layoutParams.width = width.toInt()
+                    inputParent.layoutParams.height = height.toInt()
+                    inputParent.requestLayout()
+                }
+                start()
+            }
+        }
+    }
+
     private fun requestImageBG() {
         PermissionRequester.request(this, Manifest.permission.READ_EXTERNAL_STORAGE) { permissionResult ->
             if (permissionResult) {
@@ -105,16 +130,19 @@ class TextToImagePage : AppCompatActivity() {
         }
     }
 
+    private val originInputBGColor = Color.WHITE
+    private val originInputTextSize = 15f
+    private val originInputTextColor = Color.parseColor("#222222")
+    private val minInputLength = dp2px(96)
+    private val maxInputWidth = U.app.resources.displayMetrics.widthPixels - dp2px(24)
+
     @SuppressLint("ClickableViewAccessibility")
     private fun dragLogic() {
         bottomContainer.post {
-            val maxWidth = resources.displayMetrics.widthPixels - dp2px(24)
-            val minWith = dp2px(96)
             val maxHeight = bottomContainer.height - dp2px(30)
-            val minHeight = dp2px(96)
             val downP = PointF()
-            var downWidth: Int = 0
-            var downHeight: Int = 0
+            var downWidth = 0
+            var downHeight = 0
             drag.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
@@ -131,9 +159,9 @@ class TextToImagePage : AppCompatActivity() {
                         val shouldWidth = downWidth + gapX
                         val shouldHeight = downHeight + gapY
                         inputParent.layoutParams.width =
-                            if (shouldWidth < minWith) minWith else if (shouldWidth > maxWidth) maxWidth else shouldWidth.toInt()
+                            if (shouldWidth < minInputLength) minInputLength else if (shouldWidth > maxInputWidth) maxInputWidth else shouldWidth.toInt()
                         inputParent.layoutParams.height =
-                            if (shouldHeight < minHeight) minHeight else if (shouldHeight > maxHeight) maxHeight else shouldHeight.toInt()
+                            if (shouldHeight < minInputLength) minInputLength else if (shouldHeight > maxHeight) maxHeight else shouldHeight.toInt()
                         input.requestLayout()
                     }
                 }
