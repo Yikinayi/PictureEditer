@@ -1,14 +1,16 @@
 package yzx.app.editer.pages
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.PointF
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.getSpans
@@ -85,6 +87,45 @@ class TextToImagePage : AppCompatActivity() {
                 return@setOnClickListenerPreventFast
             }
             startCache()
+        }
+
+        dragLogic()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun dragLogic() {
+        bottomContainer.post {
+            val maxWidth = resources.displayMetrics.widthPixels - dp2px(24)
+            val minWith = dp2px(100)
+            val maxHeight = bottomContainer.height - dp2px(30)
+            val minHeight = dp2px(100)
+            val downP = PointF()
+            var downWidth: Int = 0
+            var downHeight: Int = 0
+            drag.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        downP.x = event.rawX
+                        downP.y = event.rawY
+                        downWidth = inputParent.width
+                        downHeight = inputParent.height
+                    }
+                    MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        val nowX = event.rawX
+                        val nowY = event.rawY
+                        val gapX = nowX - downP.x
+                        val gapY = nowY - downP.y
+                        val shouldWidth = downWidth + gapX
+                        val shouldHeight = downHeight + gapY
+                        inputParent.layoutParams.width =
+                            if (shouldWidth < minWith) minWith else if (shouldWidth > maxWidth) maxWidth else shouldWidth.toInt()
+                        inputParent.layoutParams.height =
+                            if (shouldHeight < minHeight) minHeight else if (shouldHeight > maxHeight) maxHeight else shouldHeight.toInt()
+                        input.requestLayout()
+                    }
+                }
+                true
+            }
         }
     }
 

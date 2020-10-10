@@ -156,36 +156,47 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/bottomContainer"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="20dp">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/input"
+
+        <FrameLayout
+            android:id="@+id/inputParent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:gravity="left|top"
-            android:hint="这里输入文字"
-            android:textColor="#222222"
-            android:textColorHint="#999999"
-            android:textSize="15dp" />
+            android:layout_height="96dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="20dp">
 
-        <ImageView
-            android:id="@+id/drag"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="right|bottom"
-            android:alpha="0.4"
-            android:src="@drawable/ic_text_to_image_drage"
-            android:translationX="1dp"
-            android:translationY="1dp" />
+            <EditText
+                android:id="@+id/input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:gravity="left|top"
+                android:hint="这里输入文字"
+                android:textColor="#222222"
+                android:textColorHint="#999999"
+                android:textSize="15dp" />
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/drag"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="right|bottom"
+                android:alpha="0.4"
+                android:src="@drawable/ic_text_to_image_drage"
+                android:translationX="1dp"
+                android:translationY="1dp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>
