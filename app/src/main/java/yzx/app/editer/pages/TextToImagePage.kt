@@ -5,8 +5,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.getSpans
 import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.page_text_to_image.*
 import yzx.app.editer.R
@@ -18,8 +22,11 @@ import yzx.app.editer.util.U
 import yzx.app.editer.util.dialog.IntRangeSelectAlert
 import yzx.app.editer.util.dialog.SimpleConfirmAlert
 import yzx.app.editer.util.dp2px
+import yzx.app.editer.util.px2dp
 import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 import yzx.app.editer.widget.toast.toast
+import kotlin.math.max
+import kotlin.math.min
 
 
 class TextToImagePage : AppCompatActivity() {
@@ -65,11 +72,31 @@ class TextToImagePage : AppCompatActivity() {
     }
 
     private fun onTextColorSelected(c: Int) {
-
+        val start = min(input.selectionStart, input.selectionEnd)
+        val end = max(input.selectionStart, input.selectionEnd)
+        if (start == end) {
+            input.text.getSpans<ForegroundColorSpan>().forEach { input.text.removeSpan(it) }
+            input.setTextColor(c)
+        } else {
+            val target = input.text.subSequence(start, end)
+            val newChars = SpannableString(target)
+            newChars.setSpan(ForegroundColorSpan(c), 0, target.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            input.text.replace(start, end, newChars)
+        }
     }
 
     private fun onTextSizeSelected(size: Int) {
-
+        val start = min(input.selectionStart, input.selectionEnd)
+        val end = max(input.selectionStart, input.selectionEnd)
+        if (start == end) {
+            input.text.getSpans<AbsoluteSizeSpan>().forEach { input.text.removeSpan(it) }
+            input.textSize = size.toFloat()
+        } else {
+            val target = input.text.subSequence(start, end)
+            val newChars = SpannableString(target)
+            newChars.setSpan(AbsoluteSizeSpan(dp2px(size)), 0, target.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+            input.text.replace(start, end, newChars)
+        }
     }
 
     private fun startSave() {
@@ -105,13 +132,10 @@ class TextToImagePage : AppCompatActivity() {
     }
 
 
-    private var nowTextSize = 15
-
     private fun showSelectedSizeMenu(onSelected: (Int) -> Unit) {
         val min = 8
         val max = 60
-        IntRangeSelectAlert.show(this, nowTextSize, min, max, "选择字体大小") {
-            nowTextSize = it
+        IntRangeSelectAlert.show(this, px2dp(input.textSize.toInt()), min, max, "选择字体大小") {
             onSelected.invoke(it)
         }
     }

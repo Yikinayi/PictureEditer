@@ -22,6 +22,10 @@ fun dp2px(dp: Int): Int {
     return (U.app.resources.displayMetrics.density * dp + 0.5f).toInt()
 }
 
+fun px2dp(px: Int): Int {
+    return (px.toFloat() / U.app.resources.displayMetrics.density + 0.5f).toInt()
+}
+
 
 fun ViewGroup.inflate(id: Int, attach: Boolean = false): View {
     return LayoutInflater.from(context).inflate(id, this, attach)
