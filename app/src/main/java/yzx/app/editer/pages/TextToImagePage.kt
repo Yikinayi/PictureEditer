@@ -106,9 +106,9 @@ class TextToImagePage : AppCompatActivity() {
                     val p = it.animatedValue as Float
                     val width = startWidth + p * (toWidth - startWidth)
                     val height = toHeight + (1 - p) * (startHeight - toHeight)
-                    inputParent.layoutParams.width = width.toInt()
-                    inputParent.layoutParams.height = height.toInt()
-                    inputParent.requestLayout()
+                    inputParent?.layoutParams?.width = width.toInt()
+                    inputParent?.layoutParams?.height = height.toInt()
+                    inputParent?.requestLayout()
                 }
                 start()
             }
