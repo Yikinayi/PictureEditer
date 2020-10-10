@@ -109,9 +109,9 @@ class TextToImagePage : AppCompatActivity() {
     private fun dragLogic() {
         bottomContainer.post {
             val maxWidth = resources.displayMetrics.widthPixels - dp2px(24)
-            val minWith = dp2px(100)
+            val minWith = dp2px(96)
             val maxHeight = bottomContainer.height - dp2px(30)
-            val minHeight = dp2px(100)
+            val minHeight = dp2px(96)
             val downP = PointF()
             var downWidth: Int = 0
             var downHeight: Int = 0
