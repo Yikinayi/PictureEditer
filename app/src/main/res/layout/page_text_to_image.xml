@@ -32,56 +32,125 @@
     </FrameLayout>
 
 
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="6dp">
+
+            <ImageView
+                android:id="@+id/bgButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="8dp"
+                android:src="@drawable/ic_text_to_image_bg"
+                app:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/imageBgButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="8dp"
+                android:src="@drawable/ic_text_to_image_image_bg"
+                app:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/textColorButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="10dp"
+                android:src="@drawable/ic_text_to_image_text_color"
+                app:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/textSizeButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="7dp"
+                android:src="@drawable/ic_text_to_image_size"
+                app:tint="#ffffff" />
+
+
+            <ImageView
+                android:id="@+id/downLineButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="7dp"
+                android:src="@drawable/ic_text_to_image_donw_line"
+                app:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/middleLineButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="7dp"
+                android:src="@drawable/ic_text_to_image_middle_line"
+                app:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/boldButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="9dp"
+                android:src="@drawable/ic_text_to_image_bold"
+                app:tint="#ffffff" />
+
+            <ImageView
+                android:id="@+id/italicButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_translate_layer"
+                android:padding="8.5dp"
+                android:src="@drawable/ic_text_to_image_italic"
+                app:tint="#ffffff" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/bgButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_text_to_image_bg"
-            app:tint="#ffffff" />
-
-        <ImageView
-            android:id="@+id/textColorButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="15dp"
-            android:src="@drawable/ic_text_to_image_text_color"
-            app:tint="#ffffff" />
-
-        <ImageView
-            android:id="@+id/textSizeButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="12dp"
-            android:src="@drawable/ic_text_to_image_size"
-            app:tint="#ffffff" />
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="6dp">
 
         <ImageView
             android:id="@+id/clearButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="13dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_translate_layer"
+            android:padding="8dp"
             android:src="@drawable/ic_clear"
             app:tint="#ffffff" />
 
         <ImageView
             android:id="@+id/cacheButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="13.5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_translate_layer"
+            android:padding="8.5dp"
             android:src="@drawable/ic_cache"
             app:tint="#ffffff" />
 
         <ImageView
             android:id="@+id/saveButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="13.5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_translate_layer"
+            android:padding="8.5dp"
             android:src="@drawable/confirm_right"
             app:tint="#ffffff" />
 
