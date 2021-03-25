@@ -53,7 +53,7 @@ class SystemPhotographHolderActivity : AppCompatActivity() {
         val chooser = Intent(Intent.ACTION_CHOOSER)
         chooser.putExtra(Intent.EXTRA_TITLE, "请选择图片")
         chooser.putExtra(Intent.EXTRA_INTENT, Intent(Intent.ACTION_PICK, null).apply {
-            setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+            setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/gif")
         })
         startActivityForResult(chooser, requestCode)
     }

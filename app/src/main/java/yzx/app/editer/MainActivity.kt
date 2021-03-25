@@ -11,9 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         BarUtils.setStatusBarLightMode(window, true)
-
         setContentView(R.layout.activity_main)
 
         if (!isFinishing)
@@ -22,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         cacheView.setOnClickListener {
 
         }
+
     }
 
 }
