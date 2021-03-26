@@ -2,14 +2,15 @@ package yzx.app.editer.pages
 
 import android.Manifest
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.UriUtils
 import kotlinx.android.synthetic.main.item_main_edit.view.*
 import kotlinx.android.synthetic.main.item_main_edit_nomore.view.*
 import yzx.app.editer.R
@@ -19,9 +20,10 @@ import yzx.app.editer.util.bmp.BitmapAlmighty
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.inflate
 import yzx.app.editer.util.permission.PermissionRequester
-import yzx.app.editer.util.sysResource.SystemPhotograph
 import yzx.app.editer.widget.NoMoreAnimationView
 import yzx.app.editer.widget.toast.toast
+import yzx.util.sys.res.lib.SystemResourceUtil
+import yzx.util.sys.res.lib.callbacks.SelectSystemImagesCallback
 
 
 class MainEditFragment : Fragment() {
@@ -87,22 +89,26 @@ class MainEditFragment : Fragment() {
         val activity = activity ?: return
         PermissionRequester.request(activity, Manifest.permission.READ_EXTERNAL_STORAGE) { result ->
             if (result) {
-                SystemPhotograph.request(activity) { path ->
-                    if (!path.isBlank()) {
-                        val wh = BitmapAlmighty.getImageWidthHeight(path)
-                        val width = wh[0]
-                        val height = wh[1]
-                        if (width <= 0 || height <= 0) {
-                            toast("图片有问题,请重选")
-                        } else if (width < AppConfig.minEditSupportImageSize || height < AppConfig.minEditSupportImageSize) {
-                            if (limitWidthHeight)
-                                toast("图片太小啦")
-                            else
+                SystemResourceUtil.selectSystemImages(activity, object : SelectSystemImagesCallback {
+                    override fun onResult(uri: Uri?) {
+                        uri ?: return
+                        val path = UriUtils.uri2File(uri).absolutePath
+                        if (!path.isBlank()) {
+                            val wh = BitmapAlmighty.getImageWidthHeight(path)
+                            val width = wh[0]
+                            val height = wh[1]
+                            if (width <= 0 || height <= 0) {
+                                toast("图片有问题,请重选")
+                            } else if (width < AppConfig.minEditSupportImageSize || height < AppConfig.minEditSupportImageSize) {
+                                if (limitWidthHeight)
+                                    toast("图片太小啦")
+                                else
+                                    block.invoke(path)
+                            } else
                                 block.invoke(path)
-                        } else
-                            block.invoke(path)
+                        }
                     }
-                }
+                })
             } else {
                 toast("没有权限啊")
             }

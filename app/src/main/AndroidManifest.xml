@@ -33,11 +33,6 @@
             android:screenOrientation="behind"
             android:theme="@style/InsensateActivity" />
         <activity
-            android:name=".util.sysResource.SystemPhotographHolderActivity"
-            android:configChanges="screenLayout|screenSize|keyboard|keyboardHidden|layoutDirection|orientation|locale|navigation"
-            android:screenOrientation="behind"
-            android:theme="@style/InsensateActivity" />
-        <activity
             android:name=".pages.PureColorPage"
             android:screenOrientation="portrait" />
         <activity

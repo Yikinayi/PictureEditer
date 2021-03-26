@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PointF
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
@@ -17,6 +18,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.getSpans
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.UriUtils
 import kotlinx.android.synthetic.main.page_text_to_image.*
 import yzx.app.editer.R
 import yzx.app.editer.pages.ability.ColorPicker
@@ -30,9 +32,10 @@ import yzx.app.editer.util.dialog.SimpleConfirmAlert
 import yzx.app.editer.util.dp2px
 import yzx.app.editer.util.permission.PermissionRequester
 import yzx.app.editer.util.px2dp
-import yzx.app.editer.util.sysResource.SystemPhotograph
 import yzx.app.editer.util.tools.setOnClickListenerPreventFast
 import yzx.app.editer.widget.toast.toast
+import yzx.util.sys.res.lib.SystemResourceUtil
+import yzx.util.sys.res.lib.callbacks.SelectSystemImagesCallback
 import kotlin.math.max
 import kotlin.math.min
 
@@ -118,12 +121,16 @@ class TextToImagePage : AppCompatActivity() {
     private fun requestImageBG() {
         PermissionRequester.request(this, Manifest.permission.READ_EXTERNAL_STORAGE) { permissionResult ->
             if (permissionResult) {
-                SystemPhotograph.request(this) { path ->
-                    if (!path.isBlank())
-                        BitmapAlmighty.getBitmapUnderMaxSupport(path,
-                            { bmp -> input.background = BitmapDrawable(resources, bmp) },
-                            { toast("图片有问题, 请重试") })
-                }
+                SystemResourceUtil.selectSystemImages(this, object : SelectSystemImagesCallback {
+                    override fun onResult(uri: Uri?) {
+                        uri ?: return
+                        val path = UriUtils.uri2File(uri).absolutePath
+                        if (!path.isBlank())
+                            BitmapAlmighty.getBitmapUnderMaxSupport(path,
+                                { bmp -> input.background = BitmapDrawable(resources, bmp) },
+                                { toast("图片有问题, 请重试") })
+                    }
+                })
             } else {
                 toast("没有权限啊~")
             }
